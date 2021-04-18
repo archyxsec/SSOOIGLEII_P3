@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/SSOO_P3.dir/src/main.cpp.o  -o SSOO_P3 
