@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/SSOO_P3.dir/src/main.cpp.o"
+  "CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.o"
+  "CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o"
   "SSOO_P3.pdb"
   "SSOO_P3"
 )

@@ -4,7 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/main.cpp" "/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/CMakeFiles/SSOO_P3.dir/src/main.cpp.o"
+  "/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/Buscador.cpp" "/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.o"
+  "/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/semaphoreI.cpp" "/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

@@ -1,1 +1,1 @@
-/usr/bin/c++  -g   CMakeFiles/SSOO_P3.dir/src/main.cpp.o  -o SSOO_P3 
+/usr/bin/c++  -g   CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.o CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o  -o SSOO_P3 

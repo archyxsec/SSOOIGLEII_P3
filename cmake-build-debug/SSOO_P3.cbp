@@ -84,7 +84,16 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/main.cpp">
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/PaymentSystem.h">
+			<Option target="SSOO_P3"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/semaphoreI.h">
+			<Option target="SSOO_P3"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/Buscador.cpp">
+			<Option target="SSOO_P3"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/semaphoreI.cpp">
 			<Option target="SSOO_P3"/>
 		</Unit>
 		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/CMakeLists.txt">
