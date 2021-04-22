@@ -123,32 +123,59 @@ SSOO_P3/fast:
 	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/build
 .PHONY : SSOO_P3/fast
 
-src/main.o: src/main.cpp.o
+src/Buscador.o: src/Buscador.cpp.o
 
-.PHONY : src/main.o
+.PHONY : src/Buscador.o
 
 # target to build an object file
-src/main.cpp.o:
-	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/main.cpp.o
-.PHONY : src/main.cpp.o
+src/Buscador.cpp.o:
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.o
+.PHONY : src/Buscador.cpp.o
 
-src/main.i: src/main.cpp.i
+src/Buscador.i: src/Buscador.cpp.i
 
-.PHONY : src/main.i
+.PHONY : src/Buscador.i
 
 # target to preprocess a source file
-src/main.cpp.i:
-	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/main.cpp.i
-.PHONY : src/main.cpp.i
+src/Buscador.cpp.i:
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.i
+.PHONY : src/Buscador.cpp.i
 
-src/main.s: src/main.cpp.s
+src/Buscador.s: src/Buscador.cpp.s
 
-.PHONY : src/main.s
+.PHONY : src/Buscador.s
 
 # target to generate assembly for a file
-src/main.cpp.s:
-	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/main.cpp.s
-.PHONY : src/main.cpp.s
+src/Buscador.cpp.s:
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.s
+.PHONY : src/Buscador.cpp.s
+
+src/semaphoreI.o: src/semaphoreI.cpp.o
+
+.PHONY : src/semaphoreI.o
+
+# target to build an object file
+src/semaphoreI.cpp.o:
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o
+.PHONY : src/semaphoreI.cpp.o
+
+src/semaphoreI.i: src/semaphoreI.cpp.i
+
+.PHONY : src/semaphoreI.i
+
+# target to preprocess a source file
+src/semaphoreI.cpp.i:
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.i
+.PHONY : src/semaphoreI.cpp.i
+
+src/semaphoreI.s: src/semaphoreI.cpp.s
+
+.PHONY : src/semaphoreI.s
+
+# target to generate assembly for a file
+src/semaphoreI.cpp.s:
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.s
+.PHONY : src/semaphoreI.cpp.s
 
 # Help Target
 help:
@@ -159,9 +186,12 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... SSOO_P3"
 	@echo "... edit_cache"
-	@echo "... src/main.o"
-	@echo "... src/main.i"
-	@echo "... src/main.s"
+	@echo "... src/Buscador.o"
+	@echo "... src/Buscador.i"
+	@echo "... src/Buscador.s"
+	@echo "... src/semaphoreI.o"
+	@echo "... src/semaphoreI.i"
+	@echo "... src/semaphoreI.s"
 .PHONY : help
 
 

@@ -57,41 +57,67 @@ include CMakeFiles/SSOO_P3.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/SSOO_P3.dir/flags.make
 
-CMakeFiles/SSOO_P3.dir/src/main.cpp.o: CMakeFiles/SSOO_P3.dir/flags.make
-CMakeFiles/SSOO_P3.dir/src/main.cpp.o: ../src/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/SSOO_P3.dir/src/main.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SSOO_P3.dir/src/main.cpp.o -c /mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/main.cpp
+CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.o: CMakeFiles/SSOO_P3.dir/flags.make
+CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.o: ../src/Buscador.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.o -c /mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/Buscador.cpp
 
-CMakeFiles/SSOO_P3.dir/src/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SSOO_P3.dir/src/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/main.cpp > CMakeFiles/SSOO_P3.dir/src/main.cpp.i
+CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/Buscador.cpp > CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.i
 
-CMakeFiles/SSOO_P3.dir/src/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SSOO_P3.dir/src/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/main.cpp -o CMakeFiles/SSOO_P3.dir/src/main.cpp.s
+CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/Buscador.cpp -o CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.s
 
-CMakeFiles/SSOO_P3.dir/src/main.cpp.o.requires:
+CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.o.requires:
 
-.PHONY : CMakeFiles/SSOO_P3.dir/src/main.cpp.o.requires
+.PHONY : CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.o.requires
 
-CMakeFiles/SSOO_P3.dir/src/main.cpp.o.provides: CMakeFiles/SSOO_P3.dir/src/main.cpp.o.requires
-	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/main.cpp.o.provides.build
-.PHONY : CMakeFiles/SSOO_P3.dir/src/main.cpp.o.provides
+CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.o.provides: CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.o.requires
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.o.provides.build
+.PHONY : CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.o.provides
 
-CMakeFiles/SSOO_P3.dir/src/main.cpp.o.provides.build: CMakeFiles/SSOO_P3.dir/src/main.cpp.o
+CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.o.provides.build: CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.o
+
+
+CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o: CMakeFiles/SSOO_P3.dir/flags.make
+CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o: ../src/semaphoreI.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o -c /mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/semaphoreI.cpp
+
+CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/semaphoreI.cpp > CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.i
+
+CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/semaphoreI.cpp -o CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.s
+
+CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o.requires:
+
+.PHONY : CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o.requires
+
+CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o.provides: CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o.requires
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o.provides.build
+.PHONY : CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o.provides
+
+CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o.provides.build: CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o
 
 
 # Object files for target SSOO_P3
 SSOO_P3_OBJECTS = \
-"CMakeFiles/SSOO_P3.dir/src/main.cpp.o"
+"CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.o" \
+"CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o"
 
 # External object files for target SSOO_P3
 SSOO_P3_EXTERNAL_OBJECTS =
 
-SSOO_P3: CMakeFiles/SSOO_P3.dir/src/main.cpp.o
+SSOO_P3: CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.o
+SSOO_P3: CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o
 SSOO_P3: CMakeFiles/SSOO_P3.dir/build.make
 SSOO_P3: CMakeFiles/SSOO_P3.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable SSOO_P3"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable SSOO_P3"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/SSOO_P3.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -99,7 +125,8 @@ CMakeFiles/SSOO_P3.dir/build: SSOO_P3
 
 .PHONY : CMakeFiles/SSOO_P3.dir/build
 
-CMakeFiles/SSOO_P3.dir/requires: CMakeFiles/SSOO_P3.dir/src/main.cpp.o.requires
+CMakeFiles/SSOO_P3.dir/requires: CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.o.requires
+CMakeFiles/SSOO_P3.dir/requires: CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o.requires
 
 .PHONY : CMakeFiles/SSOO_P3.dir/requires
 
