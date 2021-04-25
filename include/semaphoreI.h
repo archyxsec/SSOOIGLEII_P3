@@ -13,10 +13,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <iostream>
+#include <string>
 
-sem_t *create_semaphore (const char *name, unsigned int value);
-sem_t *get_semaphore    (const char *name);
-void remove_semaphore   (const char *name);
+sem_t *create_semaphore (std::string name, unsigned int value);
+sem_t *get_semaphore    (std::string name);
+void remove_semaphore   (std::string name);
 void signal_semaphore   (sem_t *sem);
 void wait_semaphore     (sem_t *sem);
 

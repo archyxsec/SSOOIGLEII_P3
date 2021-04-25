@@ -11,6 +11,8 @@
 #include <sys/mman.h>
 #include <sys/stat.h>        /* For mode constants */
 #include <fcntl.h>
+#include <string>
+
 
 void get_shm_segments(int *shm_payment, struct T_Payment **p_payment);
 void get_sems(sem_t **p_sem_balance_ready, sem_t **p_sem_balance_charge);

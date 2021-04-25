@@ -1,3 +1,5 @@
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "EndlessLoop"
 #include "../include/PaymentSystem.h"
 
 #pragma clang diagnostic push
@@ -19,7 +21,6 @@ int main(int argc, char **args)
 
     return EXIT_SUCCESS;
 }
-#pragma clang diagnostic pop
 
 void get_shm_segments(int *shm_payment, struct T_Payment **p_payment)
 {
@@ -43,3 +44,5 @@ void get_and_process_task(sem_t *p_sem_balance_ready, sem_t *p_sem_balance_charg
     signal_semaphore(p_sem_balance_charge);
 }
 
+
+#pragma clang diagnostic pop

@@ -5,18 +5,31 @@
 #ifndef SSOO_P3_BUSCADOR_H
 #define SSOO_P3_BUSCADOR_H
 
-#include "definitions.h"
-#include "semaphoreI.h"
 #include <sys/mman.h>
 #include <sys/stat.h>        /* For mode constants */
 #include <fcntl.h>
+#include <unistd.h>
+#include <signal.h>
+#include <iostream>
+#include <mutex>
+#include <vector>
+#include <string>
 
-struct TProcess_t *g_process_table;
+#include "semaphoreI.h"
+#include "definitions.h"
+
+int g_nProcesses = N_CLIENTS + N_PAYMENT_SYSTEM;
+std::mutex mutex; // Mutex semaphore for critical seccion
+std::vector<struct TProcess_t> v_clients; //vector of clients
+
+/*Payment_system PID*/
+pid_t payment_process;
 
 /* Process management */
-void create_processes_by_class(enum ProcessClass_t clas, int n_processes, int index_process_table);
-pid_t create_single_process(char *clas, char *path, char *argv);
-void get_str_process_info(enum ProcessClass_t clas, char **path, char **str_process_class);
+void create_clients(enum ProcessClass_t clas, int n_processes, int index_process_table);
+void create_payment_system(enum ProcessClass_t clas);
+pid_t create_single_process(struct TProcess_t process, std::string argv);
+struct TProcess_t get_str_process_info(enum ProcessClass_t clas);
 
 
 /* Semaphores and shared memory management */
