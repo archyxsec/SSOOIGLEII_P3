@@ -1,11 +1,5 @@
-#include <errno.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
 
-#include <semaphoreI.h>
+#include "../include/semaphoreI.h"
 
 sem_t *create_semaphore (const char *name, unsigned int value) {
     sem_t *sem;

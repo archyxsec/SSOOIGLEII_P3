@@ -7,6 +7,13 @@
 
 #include <semaphore.h>
 
+#include <errno.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
 sem_t *create_semaphore (const char *name, unsigned int value);
 sem_t *get_semaphore    (const char *name);
 void remove_semaphore   (const char *name);

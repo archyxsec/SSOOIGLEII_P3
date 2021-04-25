@@ -8,7 +8,7 @@ all: directory ssooigle
 directory:
 	mkdir -p ${EXEC}
 
-ssooigle: ${SOURCE}${SOURCE}Main.cpp
+ssooigle: ${SOURCE}semaphoreI.cpp ${SOURCE}PaymentSystem.cpp ${SOURCE}Buscador.cpp
 	${CC} $^ -o ${EXEC}$@ ${CFLAGS}
 
 clean:
