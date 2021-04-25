@@ -18,6 +18,13 @@
 #include "semaphoreI.h"
 #include "definitions.h"
 
+#define N_CLIENTS 5
+#define N_PAYMENT_SYSTEM 1
+#define CLIENT_PATH "./exec/client"
+#define CLIENT_CLASS "CLIENT"
+#define PAYMENT_SYSTEM_PATH "./exec/PaymentSystem"
+#define PAYMENT_SYSTEM_CLASS "PAYMENT_SYSTEM"
+
 int g_nProcesses = N_CLIENTS + N_PAYMENT_SYSTEM;
 std::mutex mutex; // Mutex semaphore for critical seccion
 std::vector<struct TProcess_t> v_clients; //vector of clients
@@ -28,8 +35,8 @@ pid_t payment_process;
 /* Process management */
 void create_clients(enum ProcessClass_t clas, int n_processes, int index_process_table);
 void create_payment_system(enum ProcessClass_t clas);
-pid_t create_single_process(struct TProcess_t process, std::string argv);
-struct TProcess_t get_str_process_info(enum ProcessClass_t clas);
+pid_t create_single_process(std::string path, std::string clas, std::string argv);
+void get_str_process_info(enum ProcessClass_t clas, std::string *path, std::string *str_process_class);
 
 
 /* Semaphores and shared memory management */

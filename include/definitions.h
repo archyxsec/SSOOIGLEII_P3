@@ -21,10 +21,9 @@
 enum ProcessClass_t {CLIENT, PAYMENT_SYSTEM};
 
 struct TProcess_t {
-    std::string path;
-    std::string str_process_class; /* String representation of the process class*/
+    enum ProcessClass_t clas; /* DECODER or SYMBOL_DECODER */
     pid_t pid;                 /* Process ID */
-    ProcessClass_t clas;
+    std::string str_process_class;   /* String representation of the process class */
 };
 
 struct T_Payment{
