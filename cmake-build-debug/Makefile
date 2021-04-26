@@ -150,6 +150,87 @@ src/Buscador.cpp.s:
 	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.s
 .PHONY : src/Buscador.cpp.s
 
+src/Client_Management.o: src/Client_Management.cpp.o
+
+.PHONY : src/Client_Management.o
+
+# target to build an object file
+src/Client_Management.cpp.o:
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Client_Management.cpp.o
+.PHONY : src/Client_Management.cpp.o
+
+src/Client_Management.i: src/Client_Management.cpp.i
+
+.PHONY : src/Client_Management.i
+
+# target to preprocess a source file
+src/Client_Management.cpp.i:
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Client_Management.cpp.i
+.PHONY : src/Client_Management.cpp.i
+
+src/Client_Management.s: src/Client_Management.cpp.s
+
+.PHONY : src/Client_Management.s
+
+# target to generate assembly for a file
+src/Client_Management.cpp.s:
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Client_Management.cpp.s
+.PHONY : src/Client_Management.cpp.s
+
+src/Coincidence_Format.o: src/Coincidence_Format.cpp.o
+
+.PHONY : src/Coincidence_Format.o
+
+# target to build an object file
+src/Coincidence_Format.cpp.o:
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Coincidence_Format.cpp.o
+.PHONY : src/Coincidence_Format.cpp.o
+
+src/Coincidence_Format.i: src/Coincidence_Format.cpp.i
+
+.PHONY : src/Coincidence_Format.i
+
+# target to preprocess a source file
+src/Coincidence_Format.cpp.i:
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Coincidence_Format.cpp.i
+.PHONY : src/Coincidence_Format.cpp.i
+
+src/Coincidence_Format.s: src/Coincidence_Format.cpp.s
+
+.PHONY : src/Coincidence_Format.s
+
+# target to generate assembly for a file
+src/Coincidence_Format.cpp.s:
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Coincidence_Format.cpp.s
+.PHONY : src/Coincidence_Format.cpp.s
+
+src/Text.o: src/Text.cpp.o
+
+.PHONY : src/Text.o
+
+# target to build an object file
+src/Text.cpp.o:
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Text.cpp.o
+.PHONY : src/Text.cpp.o
+
+src/Text.i: src/Text.cpp.i
+
+.PHONY : src/Text.i
+
+# target to preprocess a source file
+src/Text.cpp.i:
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Text.cpp.i
+.PHONY : src/Text.cpp.i
+
+src/Text.s: src/Text.cpp.s
+
+.PHONY : src/Text.s
+
+# target to generate assembly for a file
+src/Text.cpp.s:
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Text.cpp.s
+.PHONY : src/Text.cpp.s
+
 src/semaphoreI.o: src/semaphoreI.cpp.o
 
 .PHONY : src/semaphoreI.o
@@ -189,6 +270,15 @@ help:
 	@echo "... src/Buscador.o"
 	@echo "... src/Buscador.i"
 	@echo "... src/Buscador.s"
+	@echo "... src/Client_Management.o"
+	@echo "... src/Client_Management.i"
+	@echo "... src/Client_Management.s"
+	@echo "... src/Coincidence_Format.o"
+	@echo "... src/Coincidence_Format.i"
+	@echo "... src/Coincidence_Format.s"
+	@echo "... src/Text.o"
+	@echo "... src/Text.i"
+	@echo "... src/Text.s"
 	@echo "... src/semaphoreI.o"
 	@echo "... src/semaphoreI.i"
 	@echo "... src/semaphoreI.s"

@@ -105,19 +105,97 @@ CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o.provides: CMakeFiles/SSOO_P3.dir/src
 CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o.provides.build: CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o
 
 
+CMakeFiles/SSOO_P3.dir/src/Client_Management.cpp.o: CMakeFiles/SSOO_P3.dir/flags.make
+CMakeFiles/SSOO_P3.dir/src/Client_Management.cpp.o: ../src/Client_Management.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/SSOO_P3.dir/src/Client_Management.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SSOO_P3.dir/src/Client_Management.cpp.o -c /mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/Client_Management.cpp
+
+CMakeFiles/SSOO_P3.dir/src/Client_Management.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SSOO_P3.dir/src/Client_Management.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/Client_Management.cpp > CMakeFiles/SSOO_P3.dir/src/Client_Management.cpp.i
+
+CMakeFiles/SSOO_P3.dir/src/Client_Management.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SSOO_P3.dir/src/Client_Management.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/Client_Management.cpp -o CMakeFiles/SSOO_P3.dir/src/Client_Management.cpp.s
+
+CMakeFiles/SSOO_P3.dir/src/Client_Management.cpp.o.requires:
+
+.PHONY : CMakeFiles/SSOO_P3.dir/src/Client_Management.cpp.o.requires
+
+CMakeFiles/SSOO_P3.dir/src/Client_Management.cpp.o.provides: CMakeFiles/SSOO_P3.dir/src/Client_Management.cpp.o.requires
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Client_Management.cpp.o.provides.build
+.PHONY : CMakeFiles/SSOO_P3.dir/src/Client_Management.cpp.o.provides
+
+CMakeFiles/SSOO_P3.dir/src/Client_Management.cpp.o.provides.build: CMakeFiles/SSOO_P3.dir/src/Client_Management.cpp.o
+
+
+CMakeFiles/SSOO_P3.dir/src/Text.cpp.o: CMakeFiles/SSOO_P3.dir/flags.make
+CMakeFiles/SSOO_P3.dir/src/Text.cpp.o: ../src/Text.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/SSOO_P3.dir/src/Text.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SSOO_P3.dir/src/Text.cpp.o -c /mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/Text.cpp
+
+CMakeFiles/SSOO_P3.dir/src/Text.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SSOO_P3.dir/src/Text.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/Text.cpp > CMakeFiles/SSOO_P3.dir/src/Text.cpp.i
+
+CMakeFiles/SSOO_P3.dir/src/Text.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SSOO_P3.dir/src/Text.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/Text.cpp -o CMakeFiles/SSOO_P3.dir/src/Text.cpp.s
+
+CMakeFiles/SSOO_P3.dir/src/Text.cpp.o.requires:
+
+.PHONY : CMakeFiles/SSOO_P3.dir/src/Text.cpp.o.requires
+
+CMakeFiles/SSOO_P3.dir/src/Text.cpp.o.provides: CMakeFiles/SSOO_P3.dir/src/Text.cpp.o.requires
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Text.cpp.o.provides.build
+.PHONY : CMakeFiles/SSOO_P3.dir/src/Text.cpp.o.provides
+
+CMakeFiles/SSOO_P3.dir/src/Text.cpp.o.provides.build: CMakeFiles/SSOO_P3.dir/src/Text.cpp.o
+
+
+CMakeFiles/SSOO_P3.dir/src/Coincidence_Format.cpp.o: CMakeFiles/SSOO_P3.dir/flags.make
+CMakeFiles/SSOO_P3.dir/src/Coincidence_Format.cpp.o: ../src/Coincidence_Format.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/SSOO_P3.dir/src/Coincidence_Format.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SSOO_P3.dir/src/Coincidence_Format.cpp.o -c /mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/Coincidence_Format.cpp
+
+CMakeFiles/SSOO_P3.dir/src/Coincidence_Format.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SSOO_P3.dir/src/Coincidence_Format.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/Coincidence_Format.cpp > CMakeFiles/SSOO_P3.dir/src/Coincidence_Format.cpp.i
+
+CMakeFiles/SSOO_P3.dir/src/Coincidence_Format.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SSOO_P3.dir/src/Coincidence_Format.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/Coincidence_Format.cpp -o CMakeFiles/SSOO_P3.dir/src/Coincidence_Format.cpp.s
+
+CMakeFiles/SSOO_P3.dir/src/Coincidence_Format.cpp.o.requires:
+
+.PHONY : CMakeFiles/SSOO_P3.dir/src/Coincidence_Format.cpp.o.requires
+
+CMakeFiles/SSOO_P3.dir/src/Coincidence_Format.cpp.o.provides: CMakeFiles/SSOO_P3.dir/src/Coincidence_Format.cpp.o.requires
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Coincidence_Format.cpp.o.provides.build
+.PHONY : CMakeFiles/SSOO_P3.dir/src/Coincidence_Format.cpp.o.provides
+
+CMakeFiles/SSOO_P3.dir/src/Coincidence_Format.cpp.o.provides.build: CMakeFiles/SSOO_P3.dir/src/Coincidence_Format.cpp.o
+
+
 # Object files for target SSOO_P3
 SSOO_P3_OBJECTS = \
 "CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.o" \
-"CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o"
+"CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o" \
+"CMakeFiles/SSOO_P3.dir/src/Client_Management.cpp.o" \
+"CMakeFiles/SSOO_P3.dir/src/Text.cpp.o" \
+"CMakeFiles/SSOO_P3.dir/src/Coincidence_Format.cpp.o"
 
 # External object files for target SSOO_P3
 SSOO_P3_EXTERNAL_OBJECTS =
 
 SSOO_P3: CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.o
 SSOO_P3: CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o
+SSOO_P3: CMakeFiles/SSOO_P3.dir/src/Client_Management.cpp.o
+SSOO_P3: CMakeFiles/SSOO_P3.dir/src/Text.cpp.o
+SSOO_P3: CMakeFiles/SSOO_P3.dir/src/Coincidence_Format.cpp.o
 SSOO_P3: CMakeFiles/SSOO_P3.dir/build.make
 SSOO_P3: CMakeFiles/SSOO_P3.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable SSOO_P3"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable SSOO_P3"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/SSOO_P3.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -127,6 +205,9 @@ CMakeFiles/SSOO_P3.dir/build: SSOO_P3
 
 CMakeFiles/SSOO_P3.dir/requires: CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.o.requires
 CMakeFiles/SSOO_P3.dir/requires: CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o.requires
+CMakeFiles/SSOO_P3.dir/requires: CMakeFiles/SSOO_P3.dir/src/Client_Management.cpp.o.requires
+CMakeFiles/SSOO_P3.dir/requires: CMakeFiles/SSOO_P3.dir/src/Text.cpp.o.requires
+CMakeFiles/SSOO_P3.dir/requires: CMakeFiles/SSOO_P3.dir/src/Coincidence_Format.cpp.o.requires
 
 .PHONY : CMakeFiles/SSOO_P3.dir/requires
 
