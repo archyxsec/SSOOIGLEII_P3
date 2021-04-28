@@ -177,6 +177,33 @@ src/Client_Management.cpp.s:
 	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Client_Management.cpp.s
 .PHONY : src/Client_Management.cpp.s
 
+src/Client_Normal.o: src/Client_Normal.cpp.o
+
+.PHONY : src/Client_Normal.o
+
+# target to build an object file
+src/Client_Normal.cpp.o:
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Client_Normal.cpp.o
+.PHONY : src/Client_Normal.cpp.o
+
+src/Client_Normal.i: src/Client_Normal.cpp.i
+
+.PHONY : src/Client_Normal.i
+
+# target to preprocess a source file
+src/Client_Normal.cpp.i:
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Client_Normal.cpp.i
+.PHONY : src/Client_Normal.cpp.i
+
+src/Client_Normal.s: src/Client_Normal.cpp.s
+
+.PHONY : src/Client_Normal.s
+
+# target to generate assembly for a file
+src/Client_Normal.cpp.s:
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Client_Normal.cpp.s
+.PHONY : src/Client_Normal.cpp.s
+
 src/Coincidence_Format.o: src/Coincidence_Format.cpp.o
 
 .PHONY : src/Coincidence_Format.o
@@ -273,6 +300,9 @@ help:
 	@echo "... src/Client_Management.o"
 	@echo "... src/Client_Management.i"
 	@echo "... src/Client_Management.s"
+	@echo "... src/Client_Normal.o"
+	@echo "... src/Client_Normal.i"
+	@echo "... src/Client_Normal.s"
 	@echo "... src/Coincidence_Format.o"
 	@echo "... src/Coincidence_Format.i"
 	@echo "... src/Coincidence_Format.s"

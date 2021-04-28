@@ -15,7 +15,7 @@
 #define CLIENT_CLASS "CLIENT"
 #define PAYMENT_SYSTEM_PATH "./exec/PaymentSystem"
 #define PAYMENT_SYSTEM_CLASS "PAYMENT_SYSTEM"
-#define N_CLIENTS 5
+#define N_CLIENTS 50
 #define N_PAYMENT_SYSTEM 1
 
 enum ProcessClass_t {CLIENT, PAYMENT_SYSTEM};
@@ -24,6 +24,12 @@ struct TProcess_t {
     enum ProcessClass_t clas; /* DECODER or SYMBOL_DECODER */
     pid_t pid;                 /* Process ID */
     std::string str_process_class;   /* String representation of the process class */
+};
+
+struct TRequest_t{
+    std::string category;
+    int initial_balance;
+    int fd_descriptor;
 };
 
 struct T_Payment{

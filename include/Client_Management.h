@@ -16,6 +16,7 @@
 #include "Text.h"
 #include "Coincidence_Format.h"
 #include "colors.h"
+#include "definitions.h"
 
 class Client_Management{
 private:
@@ -26,6 +27,7 @@ private:
     Text txt;
     std::vector<Coincidence_Format> coincidences;
     std::vector<std::thread> v_hilos;
+    struct TRequest_t request_client;
 
 public:
 
