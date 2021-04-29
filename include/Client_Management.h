@@ -12,33 +12,39 @@
 #include <algorithm>
 #include <exception>
 #include <thread>
+#include <stdlib.h>
+#include <time.h>
 
 #include "Text.h"
 #include "Coincidence_Format.h"
 #include "colors.h"
 #include "definitions.h"
+#include "mycmp.h"
 
 class Client_Management{
 private:
     unsigned thread_id;
-    unsigned begin;
-    unsigned end;
     std::string pattern;
-    Text txt;
-    std::vector<Coincidence_Format> coincidences;
+    std::vector<Text> v_txts;
     std::vector<std::thread> v_hilos;
     struct TRequest_t request_client;
 
 public:
-
-    Client_Management(unsigned id, unsigned _begin, unsigned _end, Text _txt, std::string _pattern);
+    std::priority_queue<Coincidence_Format, std::vector<Coincidence_Format>,
+            myComp> coincidences;
+    Client_Management(unsigned id);
     ~Client_Management();
-    void start_finding();
     void add_coincidence(Coincidence_Format coincidence);
-    std::string getCoincidences() const;
+    void start_finding();
+    void find(int begin, int end, std::string categoria,std::string text_name, Text txt);
+    std::string getCoincidences();
     unsigned getthreadid();
     int get_number_coindicences();
+
+    [[noreturn]] void wait_for_request();
 };
+
+
 
 
 #endif //SSOO_P3_CLIENT_MANAGEMENT_H
