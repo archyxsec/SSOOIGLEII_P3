@@ -1,1 +1,1 @@
-/usr/bin/c++  -g   CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.o CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o  -o SSOO_P3 
+/usr/bin/c++  -g   CMakeFiles/SSOO_P3.dir/src/Buscador.cpp.o CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o CMakeFiles/SSOO_P3.dir/src/Client_Management.cpp.o CMakeFiles/SSOO_P3.dir/src/Text.cpp.o CMakeFiles/SSOO_P3.dir/src/Coincidence_Format.cpp.o CMakeFiles/SSOO_P3.dir/src/Client_Normal.cpp.o  -o SSOO_P3 

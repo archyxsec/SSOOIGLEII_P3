@@ -84,13 +84,52 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/Buscador.h">
+			<Option target="SSOO_P3"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/Client.h">
+			<Option target="SSOO_P3"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/Client_Management.h">
+			<Option target="SSOO_P3"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/Client_Normal.h">
+			<Option target="SSOO_P3"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/Client_Premium.h">
+			<Option target="SSOO_P3"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/Client_Premium_Limit.h">
+			<Option target="SSOO_P3"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/Coincidence_Format.h">
+			<Option target="SSOO_P3"/>
+		</Unit>
 		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/PaymentSystem.h">
+			<Option target="SSOO_P3"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/Text.h">
+			<Option target="SSOO_P3"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/colors.h">
 			<Option target="SSOO_P3"/>
 		</Unit>
 		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/semaphoreI.h">
 			<Option target="SSOO_P3"/>
 		</Unit>
 		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/Buscador.cpp">
+			<Option target="SSOO_P3"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/Client_Management.cpp">
+			<Option target="SSOO_P3"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/Client_Normal.cpp">
+			<Option target="SSOO_P3"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/Coincidence_Format.cpp">
+			<Option target="SSOO_P3"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/Text.cpp">
 			<Option target="SSOO_P3"/>
 		</Unit>
 		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/semaphoreI.cpp">

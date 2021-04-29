@@ -6,7 +6,43 @@
 
 #IncludeRegexTransform: 
 
-/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/main.cpp
+/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/Buscador.h
+definitions.h
+/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/definitions.h
+semaphoreI.h
+/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/semaphoreI.h
+sys/mman.h
+-
+sys/stat.h
+-
+fcntl.h
+-
+
+/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/definitions.h
 iostream
 -
+
+/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/semaphoreI.h
+semaphore.h
+-
+errno.h
+-
+fcntl.h
+-
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+unistd.h
+-
+
+/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/Buscador.cpp
+../include/Buscador.h
+/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/Buscador.h
+
+/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/semaphoreI.cpp
+../include/semaphoreI.h
+/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/semaphoreI.h
 
