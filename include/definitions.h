@@ -22,13 +22,13 @@
 #define NORMAL_CATEGORY "NORMAL"
 #define N_CLIENTS 50
 #define N_PAYMENT_SYSTEM 1
-#define N_REPLICS 4
+#define N_REPLICS 8
 #define N_THREADS_PER_REPLIC 8
 
 enum ProcessClass_t {CLIENT, PAYMENT_SYSTEM};
 
 struct TProcess_t {
-    enum ProcessClass_t clas; /* DECODER or SYMBOL_DECODER */
+    enum ProcessClass_t clas;
     pid_t pid;                 /* Process ID */
     std::string str_process_class;   /* String representation of the process class */
 };
