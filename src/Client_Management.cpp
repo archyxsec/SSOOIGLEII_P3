@@ -73,8 +73,9 @@ attend_repics:
             text_lines = txt.n_lines;
             max_lines_per_thread = (text_lines / max_threads_per_file);
             end =(begin + max_lines_per_thread) - 1;
-            if((j % (max_threads_per_file-1)) == 0) {end = text_lines; text_number++;}
+            if((j % (max_threads_per_file-1)) == 0) end = text_lines;
             v_threads.push_back(std::thread (&Client_Management::start_finding,this,j,category,txt,begin,end, pattern));
+            if((j % (max_threads_per_file-1)) == 0){text_number++;begin=1;}
         }
         /*Join the threads*/
         std::for_each(v_threads.begin(), v_threads.end(), [](std::thread& t) { t.join(); });
