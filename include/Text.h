@@ -14,10 +14,10 @@
 
 class Text{
 private:
-    std::string file_name;
     std::string getlinetext(int n_line);
 public:
     unsigned n_lines;
+    std::string file_name;
     Text(std::string filename);
     Text(){};
     unsigned get_number_of_lines();

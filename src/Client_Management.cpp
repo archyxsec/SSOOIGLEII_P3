@@ -31,7 +31,7 @@ attend_repics:
         std::unique_lock<std::mutex> ul(queue_semaphore_management);
 
         extract_request_condition.wait(ul,[]{
-            return request_queue.size() <= N_REPLICS;
+            return request_queue.size() > 0;
         });
 
         /*Randomize number in order to choose 80% request for premium clients, and 20% normal client*/
@@ -120,10 +120,6 @@ int Client_Management::get_number_coindicences()
 std::string Client_Management::getCoincidences(int get_coincidences){
     std::string format_line = "";
     std::string commun_start_line;
-    //commun_start_line = "[Hilo " + std::to_string(this->thread_id) + " inicio:" + GREEN
-    //                    + std::to_string(this->begin) + RESET + " - final: " + GREEN + std::to_string(this->end) +
-    //                    RESET + "]";
-    //for(unsigned i=0;i<this->coincidences.size();i++)
     while(!this->coincidences.empty())
     {
         format_line += commun_start_line + " :: línea " + MAGENTA + std::to_string(this->coincidences[i].line_number)
@@ -137,5 +133,30 @@ std::string Client_Management::getCoincidences(int get_coincidences){
 }
 void Client_Management::start_finding(int id, std::string category, Text txt, int begin, int end, std::string pattern)
 {
-    std::cout << id << category << txt.n_lines << begin << end << pattern << std::endl;
+    std::vector<std::string> v_line_text;
+    int position;
+    /*Principal Metod of searching*/
+    for(unsigned i=begin; i<=end;i++){
+        v_line_text = txt.getlinevector(i);
+        position = 0;
+        while(position < v_line_text.size()){
+            if(txt.wordwrapper(v_line_text[position]).compare(txt.wordwrapper(pattern)) == 0){
+                Coincidence_Format coin(i,pattern,txt.file_name);
+                /*find the pattern, next search the previous and post word*/
+                if(position == (v_line_text.size()-1)){
+                    /*The pattern is at finnish*/
+                    coin.set_coincidence(v_line_text[position-1],v_line_text[position],"");
+                }else if(position == 0){
+                    /*The pattern is at beginning*/
+                    coin.set_coincidence("",v_line_text[position],v_line_text[position+1]);
+                }else{
+                    coin.set_coincidence(v_line_text[position-1],v_line_text[position],v_line_text[position+1]);
+                }
+                mutex.lock();
+                add_coincidence(coin);
+                mutex.unlock();
+            }
+            position++;
+        }
+    }
 }

@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <time.h>
+#include <mutex.h>
 
 #include "Text.h"
 #include "Coincidence_Format.h"
@@ -29,6 +30,7 @@ private:
     std::vector<Text> v_txts;
     std::vector<std::thread> v_threads;
     struct TRequest_t request_client;
+    std::mutex mutex;
 
 public:
     std::priority_queue<Coincidence_Format, std::vector<Coincidence_Format>,
