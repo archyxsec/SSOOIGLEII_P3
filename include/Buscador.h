@@ -40,7 +40,7 @@ void get_str_process_info(enum ProcessClass_t clas, std::string *path, std::stri
 
 
 /* Semaphores and shared memory management */
-void create_shm_segments(int *shm_payment, struct T_Payment **p_payment);
+void create_shm_segments(int *shm_payment, struct T_Payment **p_payment, int *shm_client, struct TRequest_t **p_request);
 void create_sems(sem_t **sem_balance_ready, sem_t **sem_balance_charge);
 void close_shared_memory_segments(int shm_payment);
 

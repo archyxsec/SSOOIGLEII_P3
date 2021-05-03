@@ -7,10 +7,14 @@
 
 #include <iostream>
 #include <string>
+#include "../include/Text.h"
 
 #define SEM_BALANCE_READY "sem_balance_ready"
 #define SEM_BALANCE_CHARGE "sem_balance_charge"
+#define SEM_REQUEST_READY "sem_request_ready"
+#define SEM_STORED_REQUEST "sem_stored_request"
 #define SHM_PAYMENT "shm_payment"
+#define SHM_CLIENT "shm_client"
 #define CLIENT_PATH "./exec/client"
 #define CLIENT_CLASS "CLIENT"
 #define PAYMENT_SYSTEM_PATH "./exec/PaymentSystem"
@@ -28,8 +32,10 @@ struct TProcess_t {
 
 struct TRequest_t{
     std::string category;
+    std::string word;
     int initial_balance;
     int fd_descriptor;
+    std::vector<Text> v_Texts;
 };
 
 struct T_Payment{

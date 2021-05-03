@@ -2,22 +2,33 @@
 
 int main(int argc, char **argv) {
 
-    int shm_payment;
-    sem_t *sem_balance_ready, *sem_balance_charge;
+    int shm_payment, shm_client;
+    sem_t *sem_balance_ready, *sem_balance_charge, *sem_request_ready, *sem_stored_request;
     struct T_Payment *payment;
-    create_shm_segments(&shm_payment, &payment);
-    create_sems(&sem_balance_ready, &sem_balance_charge);
+    struct TRequest_t *request;
+    std::vector<TRequest_t> request_Vector;
+
+    create_shm_segments(&shm_payment, &payment,&shm_client, &request);
+    create_sems(&sem_balance_ready, &sem_balance_charge, &sem_request_ready, &sem_stored_request);
 
     create_payment_system(PAYMENT_SYSTEM);
 
+    /*Esto seria una idea de como almacenar las peticiones, falta debatirlo para ver si esta bien planteado*/
+    //DUDA--> HABRIA QUE HACER UN FOR CON LOS CLIENTES PARA ALMACENAR TODAS LAS PETICIONES O SE EJECUTA DENTRO DE UN WHILE 1 ESTE MAIN
+
+    signal_semaphore(sem_request_ready);
+    wait_semaphore(sem_stored_request);
+    request_Vector.push_back(*request);
+ 
+
     /*We gonna simulate a simple Payment System*/
-    payment->id = 0;
+    /*payment->id = 0;
     payment->client_initial_balance = 10;
     payment->balance = 0;
     std::cout << "[BUSCADOR] manda recargar puntos un proceso con 0 de balance y 10 de initial_balance" << std::endl;
     signal_semaphore(sem_balance_ready);
     wait_semaphore(sem_balance_charge);
-    std::cout << "[BUSCADOR] Saldo después de llamar a Payment_system = " << payment->balance << std::endl;
+    std::cout << "[BUSCADOR] Saldo después de llamar a Payment_system = " << payment->balance << std::endl;*/
 
     return EXIT_SUCCESS;
 }
@@ -96,18 +107,25 @@ void get_str_process_info(enum ProcessClass_t clas, std::string *path, std::stri
 
 
 /* Semaphores and shared memory management */
-void create_shm_segments(int *shm_payment, struct T_Payment **p_payment)
+void create_shm_segments(int *shm_payment, struct T_Payment **p_payment, int *shm_client, struct TRequest_t **p_request)
 {
     /* Create and initialize shared memory segments */
     *shm_payment = shm_open("shm_payment", O_CREAT | O_RDWR, 0644);
     ftruncate(*shm_payment, sizeof(struct T_Payment));
     *p_payment = static_cast<T_Payment *>(mmap(NULL, sizeof(struct T_Payment),
             PROT_READ | PROT_WRITE, MAP_SHARED, *shm_payment, 0));
+
+    *shm_client = shm_open("shm_client", O_CREAT | O_RDWR, 0644);
+    ftruncate(*shm_client, sizeof(struct TRequest_t));
+    *p_request = static_cast<TRequest_t *>(mmap(NULL, sizeof(struct TRequest_t),
+            PROT_READ | PROT_WRITE, MAP_SHARED, *shm_client, 0));
 }
-void create_sems(sem_t **sem_balance_ready, sem_t **sem_balance_charge)
+void create_sems(sem_t **sem_balance_ready, sem_t **sem_balance_charge, sem_t **sem_request_ready, sem_t **sem_stored_request)
 {
     *sem_balance_ready = create_semaphore(SEM_BALANCE_READY,0);
     *sem_balance_charge = create_semaphore(SEM_BALANCE_CHARGE,0);
+    *sem_request_ready = create_semaphore(SEM_REQUEST_READY,0);
+    *sem_stored_request = create_semaphore(SEM_STORED_REQUEST,0);
 }
 void close_shared_memory_segments(int shm_payment)
 {
