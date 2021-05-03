@@ -31,6 +31,7 @@ private:
     std::vector<std::thread> v_threads;
     struct TRequest_t request_client;
     std::mutex mutex;
+    void find_ilimited_premium_client(int id, Text txt, int begin, int end, std::string pattern);
 
 public:
     std::priority_queue<Coincidence_Format, std::vector<Coincidence_Format>,

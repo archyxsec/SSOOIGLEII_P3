@@ -22,7 +22,7 @@
 #define NORMAL_CATEGORY "NORMAL"
 #define N_CLIENTS 50
 #define N_PAYMENT_SYSTEM 1
-#define N_REPLICS 8
+#define N_REPLICS 4
 #define N_THREADS_PER_REPLIC 8
 
 enum ProcessClass_t {CLIENT, PAYMENT_SYSTEM};
