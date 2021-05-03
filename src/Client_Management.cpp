@@ -133,6 +133,11 @@ std::string Client_Management::getCoincidences(int get_coincidences){
 }
 void Client_Management::start_finding(int id, std::string category, Text txt, int begin, int end, std::string pattern)
 {
+    if(category == ILIMITED_PREMIUM_CATEGORY) find_ilimited_premium_client(id, txt, begin, end, pattern);
+
+}
+void Client_Management::find_ilimited_premium_client(int id, Text txt, int begin, int end, std::string pattern)
+{
     std::vector<std::string> v_line_text;
     int position;
     /*Principal Metod of searching*/
