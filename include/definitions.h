@@ -12,8 +12,12 @@
 
 #define SEM_BALANCE_READY "sem_balance_ready"
 #define SEM_BALANCE_CHARGE "sem_balance_charge"
+#define SEM_REQUEST_READY "sem_request_ready"
+#define SEM_STORED_REQUEST "sem_stored_request"
 #define SHM_PAYMENT "shm_payment"
+#define SHM_CLIENT "shm_client"
 #define CLIENT_PATH "./exec/client"
+#define CLIENT_MANAGEMENT_PATH "./exec/Client_Management"
 #define CLIENT_CLASS "CLIENT"
 #define PAYMENT_SYSTEM_PATH "./exec/PaymentSystem"
 #define PAYMENT_SYSTEM_CLASS "PAYMENT_SYSTEM"
@@ -35,10 +39,10 @@ struct TProcess_t {
 
 struct TRequest_t{
     std::string category;
-    std::string pattern;
+    std::string word;
     int initial_balance;
     int fd_descriptor;
-    std::vector<Text> v_texts;
+    std::vector<std::string> v_texts;
 };
 
 struct T_Payment{
@@ -46,9 +50,5 @@ struct T_Payment{
     int client_initial_balance;
     int balance;
 };
-
-std::vector<TRequest_t> request_queue;
-std::mutex queue_semaphore_management;
-std::condition_variable extract_request_condition;
 
 #endif //SSOO_P3_DEFINITIONS_H

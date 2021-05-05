@@ -13,7 +13,7 @@ protected:
     int _id;
     std::string _word;
     std::string _category;
-    std::vector<Text> _text_vector;
+    std::vector<std::string> _text_vector;
     Client(int id, std::string word, std::string categoria);
     ~Client();
     void request_search();

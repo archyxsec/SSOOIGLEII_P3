@@ -20,5 +20,5 @@
 #include "../include/mycmp.h"
 
 bool myComp::operator()(Coincidence_Format &cf1, Coincidence_Format &cf2) {
-    return cf1.line_number() > cf2.line_number();
+    return cf1.line_number > cf2.line_number;
 }

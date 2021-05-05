@@ -4,13 +4,18 @@
 
 #include "../include/Client_Management.h"
 
-Client_Management::Client_Management(unsigned id)
+/*Client_Management::Client_Management(std::vector<Text> v_texts, std::string word,int fd_write_client,
+                                        int initial_balance, std::string category)
 {
-   this->thread_id = id;
-   this->wait_for_request();
-}
+    this->v_texts = v_texts;
+    this->word = word;
+    this->fd_write_client = fd_write_client;
+    this->initial_balance = initial_balance;
+    this->category;
+    this->start_finding();
+}*/
 
-[[noreturn]] void Client_Management::wait_for_request()
+/*[[noreturn]] void Client_Management::wait_for_request()
 {
     std::string category;
     std::string pattern;
@@ -34,7 +39,7 @@ attend_repics:
             return request_queue.size() > 0;
         });
 
-        /*Randomize number in order to choose 80% request for premium clients, and 20% normal client*/
+        //Randomize number in order to choose 80% request for premium clients, and 20% normal client
         random_number = 1 + rand() % (10);
         vip = (random_number <= 8 ? true : false);
         int i;
@@ -47,18 +52,18 @@ attend_repics:
 
             if(choose){
                 category = request_queue[i].category;
-                pattern = request_queue[i].pattern;
+                pattern = request_queue[i].word;
                 fd_descriptor = request_queue[i].fd_descriptor;
                 initial_balance = request_queue[i].initial_balance;
                 v_txts = request_queue[i].v_texts;
                 break;
             }
         }
-        v_txts.erase(v_txts.begin() + i); /*Remove request for queue*/
+        v_txts.erase(v_txts.begin() + i); //Remove request for queue
         extract_request_condition.notify_one();
-        ul.unlock(); /*Unlock the semaphore*/
+        ul.unlock(); //Unlock the semaphore
 
-        /*Next, We divide the work by threads*/
+        //Next, We divide the work by threads
         n_texts = v_txts.size();
         max_threads_per_file = (N_REPLICS / n_texts);
 
@@ -77,66 +82,89 @@ attend_repics:
             v_threads.push_back(std::thread (&Client_Management::start_finding,this,j,category,txt,begin,end, pattern));
             if((j % (max_threads_per_file-1)) == 0){text_number++;begin=1;}
         }
-        /*Join the threads*/
+        //Join the threads
         std::for_each(v_threads.begin(), v_threads.end(), [](std::thread& t) { t.join(); });
 
-        /*Get coincidences to Client*/
+        //Get coincidences to Client
         if(get_number_coindicences() > 0){
             std::string coincidences_string_format = this->getCoincidences(fd_descriptor);
             write(fd_descriptor, coincidences_string_format.c_str(), sizeof(coincidences_string_format));
         } else
             write(fd_descriptor, "Sorry, We dont find coincidences.\n", 34);
 
-        /*Free resources in order to prepare next request*/
+        //Free resources in order to prepare next request
         this->free_resources();
     }
-}
+}*/
 
-Client_Management::~Client_Management()
-{
-    /*Free vectors*/
-    this->free_resources();
-}
 
-void Client_Management::free_resources() {
-    this->v_threads = std::vector<std::thread>();
-    this->coincidences = std::priority_queue<Coincidence_Format, std::vector<Coincidence_Format>,
+void free_resources() {
+    //v_threads = std::vector<std::thread>();
+    coincidences = std::priority_queue<Coincidence_Format, std::vector<Coincidence_Format>,
             myComp>();
-    this->v_txts = std::vector<Text>();
+    //v_texts = std::vector<Text>();
 }
 
-void Client_Management::add_coincidence(Coincidence_Format coincidence) {
-    this->coincidences.push(coincidence);
+void add_coincidence(Coincidence_Format coincidence) {
+    coincidences.push(coincidence);
 }
 
-unsigned Client_Management::getthreadid()
+
+int get_number_coindicences()
 {
-    return this->thread_id;
+    return coincidences.size();
 }
-int Client_Management::get_number_coindicences()
-{
-    return this->coincidences.size();
-}
-std::string Client_Management::getCoincidences(int get_coincidences){
+std::string getCoincidences(int get_coincidences){
     std::string format_line = "";
     std::string commun_start_line;
-    while(!this->coincidences.empty())
+    while(!coincidences.empty())
     {
-        format_line += commun_start_line + " :: línea " + MAGENTA + std::to_string(this->coincidences[i].line_number)
+        format_line += commun_start_line + " :: línea " + MAGENTA + std::to_string(this->coincidences.top().line_number)
                        + RESET + " :: " + "... "
-                       + this->coincidences.top().coincidence.previus_word + " "
-                       + RED + this->coincidences.top().coincidence.word + RESET +
-                       + " " + this->coincidences.top().coincidence.post_word + "\n";
-        this->coincidences.pop();
+                       + coincidences.top().coincidence.previus_word + " "
+                       + RED + coincidences.top().coincidence.word + RESET +
+                       + " " + coincidences.top().coincidence.post_word + "\n";
+        coincidences.pop();
     }
     return format_line;
 }
-void Client_Management::start_finding(int id, std::string category, Text txt, int begin, int end, std::string pattern)
+void start_finding(std::vector<Text> v_texts, std::string word,int fd_write_client,
+                   int initial_balance, std::string category)
 {
-    if(category == ILIMITED_PREMIUM_CATEGORY) find_ilimited_premium_client(id, txt, begin, end, pattern);
+    std::vector<std::thread> v_threads;
+    int n_texts, max_threads_per_file,text_number, begin, end, text_lines, max_lines_per_thread, fd_descriptor;
+    //Next, We divide the work by threads
+    n_texts = v_texts.size();
+    max_threads_per_file = (N_THREADS_PER_REPLIC / n_texts);
 
+    if(max_threads_per_file == 0){
+        fprintf(stderr,"[CLIENT_MANAGER %i]Error, the max lines per threads are 0. The client cant be attend\n",getpid());
+        std::exit(EXIT_FAILURE);
+    }
+    text_number = 0;
+    begin = 1;
+    for(int j=0;j<N_THREADS_PER_REPLIC;j++){
+        Text txt = v_texts[text_number];
+        text_lines = txt.n_lines;
+        max_lines_per_thread = (text_lines / max_threads_per_file);
+        end =(begin + max_lines_per_thread) - 1;
+        if((j % (max_threads_per_file-1)) == 0) end = text_lines;
+        if(category == ILIMITED_PREMIUM_CATEGORY) v_threads.push_back(std::thread (find_ilimited_premium_client,j,txt,begin,end, word));
+
+        if((j % (max_threads_per_file-1)) == 0){text_number++;begin=1;}
+        else begin += max_lines_per_thread;
+    }
+    //Join the threads
+    std::for_each(v_threads.begin(), v_threads.end(), [](std::thread& t) { t.join(); });
+
+    //Get coincidences to Client
+    if(get_number_coindicences() > 0){
+        std::string coincidences_string_format = getCoincidences(fd_descriptor);
+        write(fd_descriptor, coincidences_string_format.c_str(), sizeof(coincidences_string_format));
+    } else
+        write(fd_descriptor, "Sorry, We dont find coincidences.\n", 34);
 }
-void Client_Management::find_ilimited_premium_client(int id, Text txt, int begin, int end, std::string pattern)
+void find_ilimited_premium_client(int id, Text txt, int begin, int end, std::string pattern)
 {
     std::vector<std::string> v_line_text;
     int position;
@@ -162,6 +190,36 @@ void Client_Management::find_ilimited_premium_client(int id, Text txt, int begin
                 mutex.unlock();
             }
             position++;
+        }
+    }
+}
+
+int main(int argc, char **argv)
+{
+    std::vector<Text> v_texts;
+    std::string word;
+    int fd_write_client;
+    int initial_balance;
+    std::string category;
+
+    parse_argv(argc, argv,v_texts,&word, &fd_write_client, &initial_balance, &category);
+
+    start_finding(v_texts,word, fd_write_client, initial_balance, category);
+}
+void parse_argv(int argc, char **argv, std::vector<Text> &v_texts, std::string *word,
+                int *fd_write_client,int *initial_balance, std::string *category)
+{
+    if(argc < 6){
+        fprintf(stderr,"[CLIENT_MANAGEMENT] Error, use: ./exec/Client_Management <category> <word> <initial_balance> <fd_pipe_descriptor> [text_files_name]");
+        std::exit(EXIT_FAILURE);
+    }
+    *category = argv[1];
+    *word = argv[2];
+    *initial_balance = atoi(argv[3]);
+    *fd_write_client = atoi(argv[4]);
+    for(int i=5; i<argc; i++){
+        if(fopen(argv[i],"r") != NULL){
+            v_texts.push_back(Text(argv[i]));
         }
     }
 }

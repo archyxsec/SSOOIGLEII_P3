@@ -9,14 +9,23 @@
 #include <string>
 #include <vector>
 #include "Client.h"
+#include "semaphoreI.h"
+#include "definitions.h"
+#include <sys/mman.h>
+#include <sys/stat.h>        /* For mode constants */
+#include <fcntl.h>
+#include <unistd.h>
+
+
+void get_sems(sem_t **p_sem_request_ready, sem_t **p_sem_stored_request);
+void get_shm_segments(int *shm_client, struct TRequest_t **p_request);
 
 class Client_Normal : protected Client{
 private:
     int n_searches;
 
 public:
-    Client_Normal(int id, std::string word, std::string categoria, int n_searches);
-    ~Client_Normal();
+    Client_Normal(int id, std::string word, std::string category, int n_searches);    ~Client_Normal();
     int get_n_searches();
 
 };

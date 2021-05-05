@@ -8,28 +8,28 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug"/>
+				<Option working_dir="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug"/>
+				<Option working_dir="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="SSOO_P3">
-				<Option output="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/SSOO_P3" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug"/>
+				<Option output="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/SSOO_P3" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -44,15 +44,15 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 SSOO_P3"/>
-					<CompileFile command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 SSOO_P3"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="SSOO_P3/fast">
-				<Option output="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/SSOO_P3" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug"/>
+				<Option output="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/SSOO_P3" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -67,75 +67,81 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 SSOO_P3/fast"/>
-					<CompileFile command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 SSOO_P3/fast"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug"/>
+				<Option working_dir="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/Buscador.h">
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/include/Buscador.h">
 			<Option target="SSOO_P3"/>
 		</Unit>
-		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/Client.h">
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/include/Client.h">
 			<Option target="SSOO_P3"/>
 		</Unit>
-		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/Client_Management.h">
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/include/Client_Management.h">
 			<Option target="SSOO_P3"/>
 		</Unit>
-		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/Client_Normal.h">
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/include/Client_Normal.h">
 			<Option target="SSOO_P3"/>
 		</Unit>
-		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/Client_Premium.h">
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/include/Client_Premium.h">
 			<Option target="SSOO_P3"/>
 		</Unit>
-		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/Client_Premium_Limit.h">
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/include/Client_Premium_Limit.h">
 			<Option target="SSOO_P3"/>
 		</Unit>
-		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/Coincidence_Format.h">
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/include/Coincidence_Format.h">
 			<Option target="SSOO_P3"/>
 		</Unit>
-		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/PaymentSystem.h">
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/include/PaymentSystem.h">
 			<Option target="SSOO_P3"/>
 		</Unit>
-		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/Text.h">
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/include/Text.h">
 			<Option target="SSOO_P3"/>
 		</Unit>
-		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/colors.h">
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/include/colors.h">
 			<Option target="SSOO_P3"/>
 		</Unit>
-		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/include/semaphoreI.h">
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/include/semaphoreI.h">
 			<Option target="SSOO_P3"/>
 		</Unit>
-		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/Buscador.cpp">
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/src/Buscador.cpp">
 			<Option target="SSOO_P3"/>
 		</Unit>
-		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/Client_Management.cpp">
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/src/Client_Management.cpp">
 			<Option target="SSOO_P3"/>
 		</Unit>
-		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/Client_Normal.cpp">
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/src/Client_Normal.cpp">
 			<Option target="SSOO_P3"/>
 		</Unit>
-		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/Coincidence_Format.cpp">
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/src/Client_Premium.cpp">
 			<Option target="SSOO_P3"/>
 		</Unit>
-		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/Text.cpp">
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/src/Client_Premium_Limit.cpp">
 			<Option target="SSOO_P3"/>
 		</Unit>
-		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/src/semaphoreI.cpp">
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/src/Coincidence_Format.cpp">
 			<Option target="SSOO_P3"/>
 		</Unit>
-		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/CMakeLists.txt">
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/src/Text.cpp">
+			<Option target="SSOO_P3"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/src/semaphoreI.cpp">
+			<Option target="SSOO_P3"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

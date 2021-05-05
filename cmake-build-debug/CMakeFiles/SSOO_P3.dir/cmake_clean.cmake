@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/SSOO_P3.dir/src/Text.cpp.o"
   "CMakeFiles/SSOO_P3.dir/src/Coincidence_Format.cpp.o"
   "CMakeFiles/SSOO_P3.dir/src/Client_Normal.cpp.o"
+  "CMakeFiles/SSOO_P3.dir/src/Client_Premium.cpp.o"
+  "CMakeFiles/SSOO_P3.dir/src/Client_Premium_Limit.cpp.o"
   "SSOO_P3.pdb"
   "SSOO_P3"
 )

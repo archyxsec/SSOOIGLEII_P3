@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /mnt/c/Users/TOMIC/CLionProjects/SSOO_P3
+CMAKE_SOURCE_DIR = /mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug
+CMAKE_BINARY_DIR = /mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/CMakeFiles /mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/CMakeFiles /mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/TOMIC/CLionProjects/SSOO_P3/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -204,6 +204,60 @@ src/Client_Normal.cpp.s:
 	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Client_Normal.cpp.s
 .PHONY : src/Client_Normal.cpp.s
 
+src/Client_Premium.o: src/Client_Premium.cpp.o
+
+.PHONY : src/Client_Premium.o
+
+# target to build an object file
+src/Client_Premium.cpp.o:
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Client_Premium.cpp.o
+.PHONY : src/Client_Premium.cpp.o
+
+src/Client_Premium.i: src/Client_Premium.cpp.i
+
+.PHONY : src/Client_Premium.i
+
+# target to preprocess a source file
+src/Client_Premium.cpp.i:
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Client_Premium.cpp.i
+.PHONY : src/Client_Premium.cpp.i
+
+src/Client_Premium.s: src/Client_Premium.cpp.s
+
+.PHONY : src/Client_Premium.s
+
+# target to generate assembly for a file
+src/Client_Premium.cpp.s:
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Client_Premium.cpp.s
+.PHONY : src/Client_Premium.cpp.s
+
+src/Client_Premium_Limit.o: src/Client_Premium_Limit.cpp.o
+
+.PHONY : src/Client_Premium_Limit.o
+
+# target to build an object file
+src/Client_Premium_Limit.cpp.o:
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Client_Premium_Limit.cpp.o
+.PHONY : src/Client_Premium_Limit.cpp.o
+
+src/Client_Premium_Limit.i: src/Client_Premium_Limit.cpp.i
+
+.PHONY : src/Client_Premium_Limit.i
+
+# target to preprocess a source file
+src/Client_Premium_Limit.cpp.i:
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Client_Premium_Limit.cpp.i
+.PHONY : src/Client_Premium_Limit.cpp.i
+
+src/Client_Premium_Limit.s: src/Client_Premium_Limit.cpp.s
+
+.PHONY : src/Client_Premium_Limit.s
+
+# target to generate assembly for a file
+src/Client_Premium_Limit.cpp.s:
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Client_Premium_Limit.cpp.s
+.PHONY : src/Client_Premium_Limit.cpp.s
+
 src/Coincidence_Format.o: src/Coincidence_Format.cpp.o
 
 .PHONY : src/Coincidence_Format.o
@@ -303,6 +357,12 @@ help:
 	@echo "... src/Client_Normal.o"
 	@echo "... src/Client_Normal.i"
 	@echo "... src/Client_Normal.s"
+	@echo "... src/Client_Premium.o"
+	@echo "... src/Client_Premium.i"
+	@echo "... src/Client_Premium.s"
+	@echo "... src/Client_Premium_Limit.o"
+	@echo "... src/Client_Premium_Limit.i"
+	@echo "... src/Client_Premium_Limit.s"
 	@echo "... src/Coincidence_Format.o"
 	@echo "... src/Coincidence_Format.i"
 	@echo "... src/Coincidence_Format.s"

@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <time.h>
-#include <mutex.h>
+#include <mutex>
 
 #include "Text.h"
 #include "Coincidence_Format.h"
@@ -23,32 +23,21 @@
 #include "definitions.h"
 #include "mycmp.h"
 
-class Client_Management{
-private:
-    unsigned thread_id;
-    std::string pattern;
-    std::vector<Text> v_txts;
-    std::vector<std::thread> v_threads;
-    struct TRequest_t request_client;
-    std::mutex mutex;
-    void find_ilimited_premium_client(int id, Text txt, int begin, int end, std::string pattern);
 
-public:
-    std::priority_queue<Coincidence_Format, std::vector<Coincidence_Format>,
-            myComp> coincidences;
-    Client_Management(unsigned id);
-    ~Client_Management();
-    void add_coincidence(Coincidence_Format coincidence);
-    void start_finding(int id, std::string category, Text txt, int begin, int end, std::string pattern);
-    //void find(int begin, int end, std::string categoria,std::string text_name, Text txt);
-    std::string getCoincidences(int fd_descriptor);
-    unsigned getthreadid();
-    int get_number_coindicences();
-    void free_resources();
-    [[noreturn]] void wait_for_request();
-};
+std::mutex mutex;
+std::priority_queue<Coincidence_Format, std::vector<Coincidence_Format>,
+        myComp> coincidences;
 
 
+void parse_argv(int argc, char **argv, std::vector<Text> &v_texts, std::string *word,
+                int *fd_write_client,int *initial_balance, std::string *category);
+void find_ilimited_premium_client(int id, Text txt, int begin, int end, std::string pattern);
+void add_coincidence(Coincidence_Format coincidence);
+void free_resources();
+int get_number_coindicences();
+void start_finding(std::vector<Text> v_texts, std::string word,int fd_write_client,
+                   int initial_balance, std::string category);
+std::string getCoincidences(int fd_descriptor);
 
 
 #endif //SSOO_P3_CLIENT_MANAGEMENT_H

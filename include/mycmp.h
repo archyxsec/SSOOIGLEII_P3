@@ -24,7 +24,7 @@
 
 class myComp {
 public:
-    bool operator()(Thread_Management& thrm1, Thread_Management& thrm2);
+    bool operator()(Coincidence_Format &cf1, Coincidence_Format &cf2);
 };
 
 #endif //PRACTICA2_MYCMP_H
