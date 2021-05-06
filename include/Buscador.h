@@ -15,6 +15,7 @@
 #include <vector>
 #include <thread>
 #include <string>
+#include <algorithm>
 
 #include "semaphoreI.h"
 #include "definitions.h"
@@ -44,11 +45,18 @@ void get_str_process_info(enum ProcessClass_t clas, std::string *path, std::stri
 /* Semaphores and shared memory management */
 void create_shm_segments(int *shm_payment, struct T_Payment **p_payment, int *shm_client, struct TRequest_t **p_request);
 void create_sems(sem_t **sem_balance_ready, sem_t **sem_balance_charge, sem_t **sem_request_ready, sem_t **sem_stored_request);
-void close_shared_memory_segments(int shm_payment);
-void wait_requests(sem_t *sem_request_ready, sem_t *sem_stored_request,struct TRequest_t **request);
+void close_shared_memory_segments(int shm_payment, int shm_client);
+
+
+/*Client_Management Threads*/
+void wait_requests(sem_t *sem_request_ready, sem_t *sem_stored_request,struct TRequest_t *request);
+//void wait_requests(sem_t *sem_balance_ready, sem_t *sem_balance_charge,struct T_Payment *payment);
+void manage_queue();
+void create_client_management(char *v_texts, char *word,
+                              int fd_write_client, int initial_balance, const char *category, int client_pid);
+
+/*Management Processes*/
 void terminate_processes();
 void free_resources();
-void create_client_management(std::vector<std::string> v_texts, std::string word,
-                              int fd_write_client, int initial_balance, std::string category);
 
 #endif //SSOO_P3_BUSCADOR_H

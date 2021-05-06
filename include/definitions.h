@@ -8,6 +8,9 @@
 #include <iostream>
 #include <string>
 #include <condition_variable>
+#include <signal.h>
+#include <string.h>
+#include <array>
 #include "Text.h"
 
 #define SEM_BALANCE_READY "sem_balance_ready"
@@ -17,6 +20,7 @@
 #define SHM_PAYMENT "shm_payment"
 #define SHM_CLIENT "shm_client"
 #define CLIENT_PATH "./exec/client"
+#define CLIENT_PREMIUM_PATH "./exec/Client_Premium"
 #define CLIENT_MANAGEMENT_PATH "./exec/Client_Management"
 #define CLIENT_CLASS "CLIENT"
 #define PAYMENT_SYSTEM_PATH "./exec/PaymentSystem"
@@ -28,6 +32,9 @@
 #define N_PAYMENT_SYSTEM 1
 #define N_REPLICS 4
 #define N_THREADS_PER_REPLIC 8
+#define BUFFER_RESULTS 5000
+#define MAX_BUFFER_TEXT 1024
+
 
 enum ProcessClass_t {CLIENT, PAYMENT_SYSTEM};
 
@@ -38,11 +45,12 @@ struct TProcess_t {
 };
 
 struct TRequest_t{
-    std::string category;
-    std::string word;
+    int client_pid;
+    char category[MAX_BUFFER_TEXT];
+    char word[MAX_BUFFER_TEXT];
     int initial_balance;
     int fd_descriptor;
-    std::vector<std::string> v_texts;
+    char v_texts[MAX_BUFFER_TEXT];
 };
 
 struct T_Payment{

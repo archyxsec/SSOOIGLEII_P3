@@ -119,7 +119,7 @@ std::string getCoincidences(int get_coincidences){
     std::string commun_start_line;
     while(!coincidences.empty())
     {
-        format_line += commun_start_line + " :: línea " + MAGENTA + std::to_string(this->coincidences.top().line_number)
+        format_line += commun_start_line + " :: línea " + MAGENTA + std::to_string(coincidences.top().line_number)
                        + RESET + " :: " + "... "
                        + coincidences.top().coincidence.previus_word + " "
                        + RED + coincidences.top().coincidence.word + RESET +
@@ -129,7 +129,7 @@ std::string getCoincidences(int get_coincidences){
     return format_line;
 }
 void start_finding(std::vector<Text> v_texts, std::string word,int fd_write_client,
-                   int initial_balance, std::string category)
+                   int initial_balance, std::string category, int client_pid)
 {
     std::vector<std::thread> v_threads;
     int n_texts, max_threads_per_file,text_number, begin, end, text_lines, max_lines_per_thread, fd_descriptor;
@@ -161,6 +161,11 @@ void start_finding(std::vector<Text> v_texts, std::string word,int fd_write_clie
     if(get_number_coindicences() > 0){
         std::string coincidences_string_format = getCoincidences(fd_descriptor);
         write(fd_descriptor, coincidences_string_format.c_str(), sizeof(coincidences_string_format));
+        if(kill(SIGUSR1,client_pid) == -1){
+            fprintf(stderr,"[CLIENT_MANAGER %i]Error, We cannot send signal to Client %i\n",getpid(),client_pid);
+            free_resources();
+            std::exit(EXIT_FAILURE);
+        }
     } else
         write(fd_descriptor, "Sorry, We dont find coincidences.\n", 34);
 }
@@ -201,23 +206,25 @@ int main(int argc, char **argv)
     int fd_write_client;
     int initial_balance;
     std::string category;
+    int client_pid;
 
-    parse_argv(argc, argv,v_texts,&word, &fd_write_client, &initial_balance, &category);
-
-    start_finding(v_texts,word, fd_write_client, initial_balance, category);
+    parse_argv(argc, argv,v_texts,&word, &fd_write_client, &initial_balance, &category, &client_pid);
+    std::cout << "Client_Management creado" << std::endl;
+    start_finding(v_texts,word, fd_write_client, initial_balance, category, client_pid);
 }
 void parse_argv(int argc, char **argv, std::vector<Text> &v_texts, std::string *word,
-                int *fd_write_client,int *initial_balance, std::string *category)
+                int *fd_write_client,int *initial_balance, std::string *category, int *client_pid)
 {
-    if(argc < 6){
-        fprintf(stderr,"[CLIENT_MANAGEMENT] Error, use: ./exec/Client_Management <category> <word> <initial_balance> <fd_pipe_descriptor> [text_files_name]");
+    if(argc < 7){
+        fprintf(stderr,"[CLIENT_MANAGEMENT] Error, use: ./exec/Client_Management <category> <word> <initial_balance> <fd_pipe_descriptor> <client_pid> [text_files_name]");
         std::exit(EXIT_FAILURE);
     }
     *category = argv[1];
     *word = argv[2];
     *initial_balance = atoi(argv[3]);
     *fd_write_client = atoi(argv[4]);
-    for(int i=5; i<argc; i++){
+    *client_pid = atoi(argv[5]);
+    for(int i=6; i<argc; i++){
         if(fopen(argv[i],"r") != NULL){
             v_texts.push_back(Text(argv[i]));
         }
