@@ -33,7 +33,7 @@ void parse_argv(int argc, char **argv, char **word, char **v_texts_name)
     }
 }
 void install_signal_handler() {
-    if (signal(SIGUSR1, signal_handler) == SIG_ERR) {
+    if ((signal(SIGUSR1, signal_handler)) == SIG_ERR) {
         fprintf(stderr, "[MANAGER] Error installing signal handler: %s.\n", strerror(errno));
         exit(EXIT_FAILURE);
     }
@@ -53,30 +53,30 @@ int main(int argc, char **argv){
     char word[MAX_BUFFER_TEXT];
     char *category[MAX_BUFFER_TEXT];
     int shm_client;
+    char Buffer[MAX_BUFFER_TEXT];
 
     install_signal_handler();
-    std::cout << "Antes del parse" << std::endl;
     //parse_argv(argc, argv, reinterpret_cast<char **>(&word), reinterpret_cast<char **>(&v_texts_name));
+
     if(argc < 3){
         fprintf(stderr,"[CLIENT_PREMIUM %i] Error, use: ./exec/Client_Premium <pattern> [<texts>]",getpid());
         std::exit(EXIT_FAILURE);
     }
     strcpy(word,argv[1]);
+    strcpy(v_texts_name, argv[2]);
     int j = 0;
-    for(int i=2; i<argc; i++){
+    for(int i=3; i<argc; i++){
         if(fopen(argv[i],"r") != NULL){
-            strncat(v_texts_name,argv[i], sizeof(argv[i]));
+            sprintf(Buffer,"-%s",argv[i]);
+            strncat(v_texts_name,Buffer, sizeof(Buffer));
         }
     }
 
     pipe(p);
-    std::cout << word << std::endl;
     close(p[ESCRITURA]);
-    std::cout <<v_texts_name << std::endl;
 
     get_shm_segments(&shm_client, &client_premium);
     get_sems(&p_sem_request_ready, &p_sem_stored_request);
-
     std::cout << "[CLIENT_PREMIUM " << getpid() << "] I'm gonna send the request" << std::endl;
     wait_semaphore(p_sem_request_ready);
     client_premium->client_pid = getpid();
@@ -85,7 +85,6 @@ int main(int argc, char **argv){
     client_premium->initial_balance = -1;
     client_premium->fd_descriptor = p[ESCRITURA];
     strcpy(client_premium->v_texts,v_texts_name);
-    std::cout << "Antes del signal sem stored" << std::endl;
     signal_semaphore(p_sem_stored_request);
     pause();
     return EXIT_SUCCESS;

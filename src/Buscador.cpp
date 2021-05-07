@@ -2,7 +2,6 @@
 
 int main(int argc, char **argv) {
 
-    free_resources();
     std::vector<std::thread> t_requests_managers;
     int shm_payment, shm_client;
     sem_t *sem_balance_ready, *sem_balance_charge, *sem_request_ready, *sem_stored_request;
@@ -20,7 +19,7 @@ int main(int argc, char **argv) {
     signal_semaphore(sem_balance_ready);
     wait_semaphore(sem_balance_charge);
     std::cout << "[BUSCADOR] Saldo después de llamar a Payment_system = " << payment->balance << std::endl;
-*/
+    */
 
     t_requests_managers.push_back(std::thread(wait_requests, sem_request_ready, sem_stored_request, request));
     //t_requests_managers.push_back(std::thread(wait_requests, sem_balance_ready, sem_balance_charge, payment));
@@ -29,8 +28,10 @@ int main(int argc, char **argv) {
     /*Create one client premium test*/
     pid_t pid = fork();
     if(pid == 0){
-        if((execl(CLIENT_PREMIUM_PATH,"CLIENT_PREMIUM","hola","data/prueba.txt")) == -1){
+        char *argv[] = {(char *)"CLIENT_PREMIUM",(char*)"hola",(char*)"data/prueba.txt",NULL};
+        if((execv(CLIENT_PREMIUM_PATH,argv)) == -1){
             fprintf(stderr,"[BUSCADOR] Error al crear cliente.\n");
+            free_resources();
             std::exit(EXIT_FAILURE);
         }
     }
@@ -41,14 +42,15 @@ int main(int argc, char **argv) {
     //while(1);
     return EXIT_SUCCESS;
 }
-void manage_queue() {
+
+[[noreturn]] void manage_queue() {
     int random_number;
     bool vip, choose;
-    char *v_texts;
-    char *word;
+    char v_texts[MAX_BUFFER_TEXT];
+    char word[MAX_BUFFER_TEXT];
     int fd_write_client;
     int initial_balance;
-    const char *category;
+    char category[MAX_BUFFER_TEXT];
     int client_pid;
     std::unique_lock<std::mutex> ul(queue_semaphore_management);
 
@@ -64,23 +66,17 @@ void manage_queue() {
         vip = (random_number <= 8 ? true : false);
         int i;
 
-        std::cout << "i random:" << i << std::endl;
-        std::cout << vip << std::endl;
-
         for (i = 0; i < request_vector.size(); i++) {
-            std::cout << request_vector[i].category << std::endl;
             if (vip && (strncmp(request_vector[i].category,PREMIUM_CATEGORY,sizeof (request_vector[i].category))==0 ||
                     strncmp(request_vector[i].category,ILIMITED_PREMIUM_CATEGORY,sizeof (request_vector[i].category))==0 ))
                 choose = true;
             else if (request_vector[i].category == NORMAL_CATEGORY) choose = true;
-            std::cout << "choose: " << choose << std::endl;
             if (choose) {
-
-                category = request_vector[i].category;
-                word = request_vector[i].word;
+                strcpy(category,request_vector[i].category );
+                strcpy(word,request_vector[i].word );
                 fd_write_client = request_vector[i].fd_descriptor;
                 initial_balance = request_vector[i].initial_balance;
-                v_texts = request_vector[i].v_texts;
+                strcpy(v_texts,request_vector[i].v_texts);
                 client_pid = request_vector[i].client_pid;
                 memset(&request_vector[i],0,sizeof(struct TRequest_t));
                 request_vector.clear(); //Remove request for queue
@@ -97,54 +93,88 @@ void manage_queue() {
     }
 }
 void create_client_management(char *v_texts, char *word,
-                              int fd_write_client, int initial_balance, const char *category, int client_pid)
+                              int fd_write_client, int initial_balance, char *category, int client_pid)
 {
     pid_t pid;
+    char fd_write_client_str[MAX_BUFFER_TEXT];
+    char initial_balance_str[MAX_BUFFER_TEXT];
+    char client_pid_str[MAX_BUFFER_TEXT];
+    int v_text_len;
+    char *token;
+    int argv_len;
+    int j;
+    char auxiliar_buffer[MAX_BUFFER_TEXT];
     switch((pid = fork())){
         case -1:
             fprintf(stderr,"[BUSCADOR] Error while create a client_management.\n");
+            free_resources();
             std::exit(EXIT_FAILURE);
-            break;
         case 0:
-            if((execl(CLIENT_MANAGEMENT_PATH,"CLIENT_MANAGEMENT",category, word, initial_balance, fd_write_client, client_pid, v_texts)) == -1){
-                fprintf(stderr,"[BUSCADOR] Error while call execl.\n");
+            /*Format integer to char* or string*/
+            sprintf(fd_write_client_str,"%d",fd_write_client);
+            sprintf(initial_balance_str,"%i",initial_balance);
+            sprintf(client_pid_str,"%d",client_pid);
+
+            std::cout << "categoria en create_client: " << category << std::endl;
+            std::cout << "word en create_client: " << word << std::endl;
+
+            /*Get the number of texts*/
+            strncpy(auxiliar_buffer, v_texts,sizeof (v_texts)); // Copy v_text in auxilizar buffer because tokenizer delete elements
+            v_text_len = gettextlen(auxiliar_buffer);
+            /*Prepare the argv vector to execl*/
+            argv_len = v_text_len + 7; //7 parameters, without the texts
+            char *argv[argv_len];
+            argv[0] = (char *)ILIMITED_PREMIUM_CATEGORY;
+            argv[1] = category;
+            argv[2] = word;
+            argv[3] = initial_balance_str;
+            argv[4] = fd_write_client_str;
+            argv[5] = client_pid_str;
+            j = 6;
+            /*Tokenizer and get the file_name of the texts*/
+            token = strtok(v_texts,"-");
+            while(token!=NULL){
+                argv[j++] = token;
+                token = strtok(NULL, "-");
+            }
+            /*Finnish with NULL argv*/
+            argv[j] = NULL;
+
+            /*Finnish with execute the client manager*/
+            if((execv(CLIENT_MANAGEMENT_PATH,argv)) == -1){
+                fprintf(stderr,"[BUSCADOR] Error while create Client Management.\n");
                 std::exit(EXIT_FAILURE);
             }
     }
 }
 
-void wait_requests(sem_t *sem_request_ready, sem_t *sem_stored_request,struct TRequest_t *request){
+int gettextlen(char *v_texts){
+    int j = 0;
+    char *token;
+    token = strtok(v_texts,"-");
+    while(token!=NULL){
+        j++;
+        token = strtok(NULL, "-");
+    }
+    return j;
+}
+
+[[noreturn]] void wait_requests(sem_t *sem_request_ready, sem_t *sem_stored_request,struct TRequest_t *request){
 
     std::unique_lock<std::mutex> ul(queue_semaphore_management);
 
     for(;;){
 
-        std::cout << "Vamos a mandar señal de ready" << std::endl;
         signal_semaphore(sem_request_ready);
         std::this_thread::sleep_for(std::chrono::seconds(2));
         wait_semaphore(sem_stored_request);
-        std::cout << "Antes de meter la petición" << std::endl;
-        std::cout << request->v_texts;
         request_vector.push_back(*request);
-        std::cout << "Petición metida" << std::endl;
+        //std::cout << "Petición metida" << std::endl;
         ul.unlock();
     }
 }
-/******** PRUEBA **************************
- * void wait_requests(sem_t *sem_balance_ready, sem_t *sem_balance_charge,struct T_Payment *payment){
 
-    std::unique_lock<std::mutex> ul(queue_semaphore_management);
 
-    payment->id = 0;
-    payment->client_initial_balance = 10;
-    payment->balance = 0;
-    std::cout << "[BUSCADOR] manda recargar puntos un proceso con 0 de balance y 10 de initial_balance" << std::endl;
-    signal_semaphore(sem_balance_ready);
-    wait_semaphore(sem_balance_charge);
-    std::cout << "[BUSCADOR] Saldo después de llamar a Payment_system = " << payment->balance << std::endl;
-    extract_request_condition.notify_one();
-    ul.unlock();
-}*/
  /* Process management */
 void create_clients(enum ProcessClass_t clas, int n_processes, int index_process_table)
 {
@@ -270,7 +300,7 @@ void terminate_processes()
 }
 void free_resources()
 {
-    std::cout << "\n----- [BUSCADOR] Freeing resources ----- " << std::endl;
+    std::cout << "\n----- [BUSCADOR] Free resources ----- " << std::endl;
 
     v_clients.clear();
 
@@ -284,4 +314,16 @@ void free_resources()
     shm_unlink(SHM_PAYMENT);
     shm_unlink(SHM_CLIENT);
 }
+
+void install_signal_handler(){
+    if (signal(SIGINT, signal_handler) == SIG_ERR) {
+        fprintf(stderr, "[MANAGER] Error installing signal handler: %s.\n", strerror(errno));
+        exit(EXIT_FAILURE);
+    }
+}
+void signal_handler(int signal){
+    std::cout << "[BUSCADOR] Exiting...";
+    free_resources();
+}
+
 

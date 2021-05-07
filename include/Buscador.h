@@ -49,14 +49,17 @@ void close_shared_memory_segments(int shm_payment, int shm_client);
 
 
 /*Client_Management Threads*/
-void wait_requests(sem_t *sem_request_ready, sem_t *sem_stored_request,struct TRequest_t *request);
+[[noreturn]] void wait_requests(sem_t *sem_request_ready, sem_t *sem_stored_request,struct TRequest_t *request);
 //void wait_requests(sem_t *sem_balance_ready, sem_t *sem_balance_charge,struct T_Payment *payment);
-void manage_queue();
+[[noreturn]] void manage_queue();
 void create_client_management(char *v_texts, char *word,
-                              int fd_write_client, int initial_balance, const char *category, int client_pid);
+                              int fd_write_client, int initial_balance, char *category, int client_pid);
+int gettextlen(char *v_texts);
 
 /*Management Processes*/
 void terminate_processes();
 void free_resources();
+void install_signal_handler();
+void signal_handler(int signal);
 
 #endif //SSOO_P3_BUSCADOR_H

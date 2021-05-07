@@ -9,6 +9,7 @@
 #include <string>
 #include <condition_variable>
 #include <signal.h>
+#include <sys/types.h>
 #include <string.h>
 #include <array>
 #include "Text.h"
