@@ -22,12 +22,21 @@ int main(int argc, char **argv) {
     */
 
     t_requests_managers.push_back(std::thread(wait_requests, sem_request_ready, sem_stored_request, request));
-    //t_requests_managers.push_back(std::thread(wait_requests, sem_balance_ready, sem_balance_charge, payment));
     t_requests_managers.push_back(std::thread(manage_queue));
 
     /*Create one client premium test*/
     pid_t pid = fork();
     if(pid == 0){
+        char *argv[] = {(char *)"CLIENT_PREMIUM",(char*)"lol",(char*)"data/pruebatildes.txt",NULL};
+        if((execv(CLIENT_PREMIUM_PATH,argv)) == -1){
+            fprintf(stderr,"[BUSCADOR] Error al crear cliente.\n");
+            free_resources();
+            std::exit(EXIT_FAILURE);
+        }
+    }
+
+    pid_t pid1 = fork();
+    if(pid1 == 0){
         char *argv[] = {(char *)"CLIENT_PREMIUM",(char*)"hola",(char*)"data/prueba.txt",NULL};
         if((execv(CLIENT_PREMIUM_PATH,argv)) == -1){
             fprintf(stderr,"[BUSCADOR] Error al crear cliente.\n");
@@ -35,8 +44,6 @@ int main(int argc, char **argv) {
             std::exit(EXIT_FAILURE);
         }
     }
-    //std::this_thread::sleep_for(std::chrono::seconds(2));
-    //create_payment_system(PAYMENT_SYSTEM);
 
     std::for_each(t_requests_managers.begin(), t_requests_managers.end(), [](std::thread& t) { t.join(); });
     //while(1);
@@ -44,18 +51,19 @@ int main(int argc, char **argv) {
 }
 
 [[noreturn]] void manage_queue() {
-    int random_number;
     bool vip, choose;
+    int random_number;
     char v_texts[MAX_BUFFER_TEXT];
     char word[MAX_BUFFER_TEXT];
-    int fd_write_client;
+    char pipename[MAX_BUFFER_TEXT];
     int initial_balance;
     char category[MAX_BUFFER_TEXT];
     int client_pid;
-    std::unique_lock<std::mutex> ul(queue_semaphore_management);
 
     for (;;) {
+        choose = false;
 
+        std::unique_lock<std::mutex> ul(queue_semaphore_management);
         extract_request_condition.wait(ul, [] {
             return request_vector.size() > 0;
         });
@@ -63,37 +71,36 @@ int main(int argc, char **argv) {
 
         //Randomize number in order to choose 80% request for premium clients, and 20% normal client
         random_number = 1 + rand() % (10);
-        vip = (random_number <= 8 ? true : false);
+        vip = random_number <= 8;
+        std::cout << "Numero random: " << random_number << std::endl;
         int i;
 
         for (i = 0; i < request_vector.size(); i++) {
             if (vip && (strncmp(request_vector[i].category,PREMIUM_CATEGORY,sizeof (request_vector[i].category))==0 ||
                     strncmp(request_vector[i].category,ILIMITED_PREMIUM_CATEGORY,sizeof (request_vector[i].category))==0 ))
                 choose = true;
-            else if (request_vector[i].category == NORMAL_CATEGORY) choose = true;
+            else if (strncmp(request_vector[i].category,NORMAL_CATEGORY,sizeof (request_vector[i].category))) choose = true;
             if (choose) {
+                std::cout << "Hemos elegido el cliente: " << request_vector[i].client_pid << std::endl;
                 strcpy(category,request_vector[i].category );
                 strcpy(word,request_vector[i].word );
-                fd_write_client = request_vector[i].fd_descriptor;
+                strcpy(pipename,request_vector[i].pipename);
                 initial_balance = request_vector[i].initial_balance;
                 strcpy(v_texts,request_vector[i].v_texts);
                 client_pid = request_vector[i].client_pid;
-                memset(&request_vector[i],0,sizeof(struct TRequest_t));
-                request_vector.clear(); //Remove request for queue
-                create_client_management(v_texts, word,fd_write_client, initial_balance, category, client_pid);
-
+                request_vector.erase(request_vector.begin() + i); //Remove request for queue
+                std::cout << "Creamos client manager para cliente: " << client_pid << std::endl;
+                create_client_management(v_texts, word,pipename, initial_balance, category, client_pid);
+                std::cout << "tamaño del vector despues de crear client manager " << request_vector.size() << std::endl;
                 break;
             }
         }
 
         extract_request_condition.notify_one();
-        /*Create process*/
-        ul.unlock(); //Unlock the semaphore
-
-    }
+   }
 }
 void create_client_management(char *v_texts, char *word,
-                              int fd_write_client, int initial_balance, char *category, int client_pid)
+                              char *pipename, int initial_balance, char *category, int client_pid)
 {
     pid_t pid;
     char fd_write_client_str[MAX_BUFFER_TEXT];
@@ -111,12 +118,8 @@ void create_client_management(char *v_texts, char *word,
             std::exit(EXIT_FAILURE);
         case 0:
             /*Format integer to char* or string*/
-            sprintf(fd_write_client_str,"%d",fd_write_client);
             sprintf(initial_balance_str,"%i",initial_balance);
             sprintf(client_pid_str,"%d",client_pid);
-
-            std::cout << "categoria en create_client: " << category << std::endl;
-            std::cout << "word en create_client: " << word << std::endl;
 
             /*Get the number of texts*/
             strncpy(auxiliar_buffer, v_texts,sizeof (v_texts)); // Copy v_text in auxilizar buffer because tokenizer delete elements
@@ -128,7 +131,7 @@ void create_client_management(char *v_texts, char *word,
             argv[1] = category;
             argv[2] = word;
             argv[3] = initial_balance_str;
-            argv[4] = fd_write_client_str;
+            argv[4] = pipename;
             argv[5] = client_pid_str;
             j = 6;
             /*Tokenizer and get the file_name of the texts*/
@@ -161,16 +164,14 @@ int gettextlen(char *v_texts){
 
 [[noreturn]] void wait_requests(sem_t *sem_request_ready, sem_t *sem_stored_request,struct TRequest_t *request){
 
-    std::unique_lock<std::mutex> ul(queue_semaphore_management);
-
     for(;;){
-
+        std::unique_lock<std::mutex> ul(queue_semaphore_management);
         signal_semaphore(sem_request_ready);
-        std::this_thread::sleep_for(std::chrono::seconds(2));
         wait_semaphore(sem_stored_request);
+        std::cout << "[BUSCADOR WAIT REQUESTS THREAD] " << request->client_pid << " request accepted" << std::endl;
         request_vector.push_back(*request);
-        //std::cout << "Petición metida" << std::endl;
-        ul.unlock();
+        extract_request_condition.notify_one();
+        extract_request_condition.wait(ul);
     }
 }
 
@@ -254,8 +255,8 @@ void create_shm_segments(int *shm_payment, struct T_Payment **p_payment, int *sh
 {
     /* Create and initialize shared memory segments */
     *shm_payment = shm_open(SHM_PAYMENT, O_CREAT | O_RDWR, 0644);
-    ftruncate(*shm_payment, sizeof(struct T_Payment));
-    *p_payment = static_cast<T_Payment *>(mmap(NULL, sizeof(struct T_Payment),
+    ftruncate(*shm_payment, sizeof(struct TPayment));
+    *p_payment = static_cast<T_Payment *>(mmap(NULL, sizeof(struct TPayment),
             PROT_READ | PROT_WRITE, MAP_SHARED, *shm_payment, 0));
 
     *shm_client = shm_open(SHM_CLIENT, O_CREAT | O_RDWR, 0644);
@@ -321,6 +322,7 @@ void install_signal_handler(){
         exit(EXIT_FAILURE);
     }
 }
+
 void signal_handler(int signal){
     std::cout << "[BUSCADOR] Exiting...";
     free_resources();

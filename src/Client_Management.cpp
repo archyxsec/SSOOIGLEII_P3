@@ -114,12 +114,11 @@ int get_number_coindicences()
 {
     return coincidences.size();
 }
-std::string getCoincidences(int get_coincidences){
+std::string getCoincidences(){
     std::string format_line = "";
-    std::string commun_start_line;
     while(!coincidences.empty())
     {
-        format_line += commun_start_line + " :: línea " + MAGENTA + std::to_string(coincidences.top().line_number)
+        format_line += BLUE + coincidences.top().get_file_name() + RESET + " :: línea " + MAGENTA + std::to_string(coincidences.top().line_number)
                        + RESET + " :: " + "... "
                        + coincidences.top().coincidence.previus_word + " "
                        + RED + coincidences.top().coincidence.word + RESET +
@@ -127,14 +126,30 @@ std::string getCoincidences(int get_coincidences){
         coincidences.pop();
     }
     return format_line;
+    /*char *format_line = (char*)malloc(MAX_BUFFER_TEXT);
+    //sprintf(format_line,"");
+    strcpy(format_line, "");
+    char aux[MAX_BUFFER_TEXT];
+    while(!coincidences.empty())
+    {
+        sprintf(aux," :: line %d :: %s %s %s.\n",coincidences.top().line_number,(char *)coincidences.top().coincidence.previus_word.data(),
+                (char *)coincidences.top().coincidence.word.data(), (char*)coincidences.top().coincidence.post_word.data());
+             coincidences.pop();
+             strcat(format_line,aux);
+    }
+    return format_line;*/
 }
-void start_finding(std::vector<Text> v_texts, char *word,int fd_write_client,
-                   int initial_balance, char *category, int client_pid)
+void start_finding(std::vector<Text> v_texts, char *word,
+                   char *pipename, int initial_balance, char *category, int client_pid)
 {
     int j;
-    std::cout << "Principio de start:finding" << std::endl;
+    int clientpipe;
     std::vector<std::thread> v_threads;
-    int n_texts, max_threads_per_file,text_number, begin, end, text_lines, max_lines_per_thread, fd_descriptor;
+    std::string coincidences_string_format;
+    int n_texts, max_threads_per_file,text_number, begin, end, text_lines, max_lines_per_thread;
+    //Open the client pipe
+    clientpipe = open(pipename, O_WRONLY);
+
     //Next, We divide the work by threads
 
     n_texts = v_texts.size();
@@ -147,19 +162,19 @@ void start_finding(std::vector<Text> v_texts, char *word,int fd_write_client,
     }
     text_number = 0;
     begin = 1;
-    std::cout << "Categoria = " << category << std::endl;
+    //std::cout << "Categoria = " << category << std::endl;
     std::cout << "CLIENT_MANAGEMENT Empezamos a buscar" << std::endl;
     for(j=1;j<=N_THREADS_PER_REPLIC;j++){
         Text txt = v_texts[text_number];
         text_lines = txt.n_lines;
-        std::cout << text_lines << std::endl;
+        //std::cout << text_lines << std::endl;
         max_lines_per_thread = (text_lines / max_threads_per_file);
-        std::cout << "Max_lines_per_thread = " << max_lines_per_thread << std::endl;
+        //std::cout << "Max_lines_per_thread = " << max_lines_per_thread << std::endl;
         end =(begin + max_lines_per_thread) - 1;
         if((j % (max_threads_per_file)) == 0) end = text_lines;
         if(strncmp(category,ILIMITED_PREMIUM_CATEGORY,sizeof (category)) == 0){
             v_threads.push_back(std::thread (find_ilimited_premium_client,j,txt,begin,end, word));
-            std::cout << "CLIENT_MANAGEMENT Hilo " << j << " creado, Texto: " << txt.file_name << " begin: " << begin << " end: " << end  << std::endl;
+            //std::cout << "CLIENT_MANAGEMENT Hilo " << j << " creado, Texto: " << txt.file_name << " begin: " << begin << " end: " << end  << std::endl;
         }
         if((j % (max_threads_per_file)) == 0){
             text_number++;
@@ -170,19 +185,24 @@ void start_finding(std::vector<Text> v_texts, char *word,int fd_write_client,
     }
     //Join the threads
     std::for_each(v_threads.begin(), v_threads.end(), [](std::thread& t) { t.join(); });
-
     //Get coincidences to Client
     if(get_number_coindicences() > 0){
-        std::string coincidences_string_format = getCoincidences(fd_descriptor);
+        //char *coincidences_string_format = getCoincidences();
         //std::cout << coincidences_string_format << std::endl;
-        write(fd_descriptor, coincidences_string_format.c_str(), sizeof(coincidences_string_format));
-        if(kill(SIGUSR1,client_pid) == -1){
+        coincidences_string_format = getCoincidences();
+        /*Open the pipe*/
+        write(clientpipe, coincidences_string_format.c_str(), coincidences_string_format.size());
+        std::this_thread::sleep_for(std::chrono::milliseconds(600)); // Finalize the write
+        std::cout << "[CLIENT MANAGEMENT " << getpid() << "] send the result to client: " << client_pid  << std::endl;
+        if(kill(client_pid,SIGUSR1) == -1){
             fprintf(stderr,"[CLIENT_MANAGER %i]Error, We cannot send signal to Client %i\n",getpid(),client_pid);
             free_resources();
             std::exit(EXIT_FAILURE);
         }
     } else
-        write(fd_descriptor, "Sorry, We dont find coincidences.\n", 34);
+        write(clientpipe, "Sorry, We dont find coincidences.\n", 34);
+
+    close(clientpipe);
 }
 void find_ilimited_premium_client(int id, Text txt, int begin, int end, std::string pattern)
 {
@@ -218,19 +238,16 @@ int main(int argc, char **argv)
 {
     std::vector<Text> v_texts;
     char *word;
-    int fd_write_client;
+    char *pipename;
     int initial_balance;
     char *category;
     int client_pid;
 
-    parse_argv(argc, argv,v_texts,&word, &fd_write_client, &initial_balance, &category, &client_pid);
-    std::cout << "V text size: " << v_texts.size() << std::endl;
-    std::cout << "Categoria en main " << category << std::endl;
-    std::cout << "Client_Management creado" << std::endl;
-    start_finding(v_texts,word, fd_write_client, initial_balance, category, client_pid);
+    parse_argv(argc, argv,v_texts,&word, &pipename, &initial_balance, &category, &client_pid);
+    start_finding(v_texts, word, pipename, initial_balance, category, client_pid);
 }
 void parse_argv(int argc, char **argv, std::vector<Text> &v_texts, char **word,
-                int *fd_write_client,int *initial_balance, char **category, int *client_pid)
+                char **pipename,int *initial_balance, char **category, int *client_pid)
 {
     int i;
     if(argc < 7){
@@ -238,15 +255,10 @@ void parse_argv(int argc, char **argv, std::vector<Text> &v_texts, char **word,
         std::exit(EXIT_FAILURE);
     }
     *category = argv[1];
-    std::cout << "categoria: " << *category << std::endl;
     *word = argv[2];
-    std::cout << "word: " << *word << std::endl;
     *initial_balance = atoi(argv[3]);
-    std::cout << "initial_balance: " << *initial_balance << std::endl;
-    *fd_write_client = atoi(argv[4]);
-    std::cout << "fd_write_client: " << *fd_write_client << std::endl;
+    *pipename = argv[4];
     *client_pid = atoi(argv[5]);
-    std::cout << "client_pid: " << *client_pid << std::endl;
     for(i=6; i<argc; i++){
         v_texts.push_back(Text(argv[i]));
     }

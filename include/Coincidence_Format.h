@@ -23,6 +23,7 @@ public:
     Coincidence_Format(unsigned l_number, std::string patt, std::string text_name);
     void set_coincidence(std::string previus_word, std::string word, std::string post_word);
     struct pattern coincidence;
+    std::string get_file_name() const;
     unsigned line_number;
 };
 

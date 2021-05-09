@@ -4,7 +4,7 @@
 #define ESCRITURA 1
 
 //Client_Premium::Client_Premium(int id, std::string word, std::string category) : Client(id, word, category){}
-int p[2];
+char pipename[MAX_BUFFER_TEXT];
 
 void get_shm_segments(int *shm_client, struct TRequest_t **p_request)
 {
@@ -32,18 +32,35 @@ void parse_argv(int argc, char **argv, char **word, char **v_texts_name)
         }
     }
 }
-void install_signal_handler() {
+/*void install_signal_handler() {
     if ((signal(SIGUSR1, signal_handler)) == SIG_ERR) {
         fprintf(stderr, "[MANAGER] Error installing signal handler: %s.\n", strerror(errno));
         exit(EXIT_FAILURE);
     }
-}
-void signal_handler(int signal){
-    char buffer[BUFFER_RESULTS];
+}*/
+
+/*void signal_handler(int signal){
+    //char buffer[BUFFER_RESULTS];
+    char coincidences[MAX_BUFFER_TEXT];
+    int mypipe = open(pipename, O_RDONLY);
     std::cout << "[CLIENT_PREMIUM " << getpid() << "] Client Manager send me the results!" << std::endl;
-    read(p[LECTURA],&buffer,BUFFER_RESULTS);
-    printf("%s",buffer);
+    //while((read(p[LECTURA],&coincidences,MAX_BUFFER_TEXT)) > 0){
+    //    std::cout << coincidences;
+    //}
+    std::cout << "[CLIENT_PREMIUM " << getpid() << "] Coincidences:\n" << std::endl;
+    while(read(mypipe,coincidences,MAX_BUFFER_TEXT) > 0) std::cout << coincidences;
     std::cout << "[CLIENT_PREMIUM " << getpid() << "] Im Finnish!" << std::endl;
+    close(mypipe);
+    free_resources();
+}*/
+void free_resources(){
+
+    remove_semaphore(SEM_REQUEST_READY);
+    remove_semaphore(SEM_STORED_REQUEST);
+
+    shm_unlink(SHM_CLIENT);
+    unlink(pipename);
+
 }
 int main(int argc, char **argv){
     sem_t *p_sem_request_ready, *p_sem_stored_request;
@@ -54,8 +71,11 @@ int main(int argc, char **argv){
     char *category[MAX_BUFFER_TEXT];
     int shm_client;
     char Buffer[MAX_BUFFER_TEXT];
+    char coincidences[MAX_BUFFER_TEXT];
+    int mypipe;
 
-    install_signal_handler();
+
+    //install_signal_handler();
     //parse_argv(argc, argv, reinterpret_cast<char **>(&word), reinterpret_cast<char **>(&v_texts_name));
 
     if(argc < 3){
@@ -72,20 +92,29 @@ int main(int argc, char **argv){
         }
     }
 
-    pipe(p);
-    close(p[ESCRITURA]);
+    /*Create the pipe*/
+    sprintf(pipename,"/tmp/client%d",getpid());
+    mknod(pipename,S_IFIFO | S_IRUSR | S_IWUSR,0);
 
     get_shm_segments(&shm_client, &client_premium);
     get_sems(&p_sem_request_ready, &p_sem_stored_request);
     std::cout << "[CLIENT_PREMIUM " << getpid() << "] I'm gonna send the request" << std::endl;
     wait_semaphore(p_sem_request_ready);
+
     client_premium->client_pid = getpid();
     strcpy(client_premium->category,ILIMITED_PREMIUM_CATEGORY);
     strcpy(client_premium->word,word);
     client_premium->initial_balance = -1;
-    client_premium->fd_descriptor = p[ESCRITURA];
+    strcpy(client_premium->pipename,pipename);
     strcpy(client_premium->v_texts,v_texts_name);
+
     signal_semaphore(p_sem_stored_request);
-    pause();
+    mypipe = open(pipename, O_RDONLY);
+
+    std::cout << "[CLIENT_PREMIUM " << getpid() << "] Coincidences:\n" << std::endl;
+    while(read(mypipe,coincidences,MAX_BUFFER_TEXT) > 0) std::cout << coincidences;
+    std::cout << "[CLIENT_PREMIUM " << getpid() << "] Im Finnish!" << std::endl;
+    close(mypipe);
+    free_resources();
     return EXIT_SUCCESS;
 }

@@ -18,3 +18,6 @@ void Coincidence_Format::set_coincidence(std::string previus_word, std::string w
     this->coincidence.word = word;
     this->coincidence.post_word = post_word;
 }
+std::string Coincidence_Format::get_file_name() const {
+    return this->_text_name;
+}

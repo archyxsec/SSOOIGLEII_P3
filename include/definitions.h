@@ -50,14 +50,18 @@ struct TRequest_t{
     char category[MAX_BUFFER_TEXT];
     char word[MAX_BUFFER_TEXT];
     int initial_balance;
-    int fd_descriptor;
+    char pipename[MAX_BUFFER_TEXT];
     char v_texts[MAX_BUFFER_TEXT];
 };
 
-struct T_Payment{
+struct TPayment{
     int id;
     int client_initial_balance;
     int balance;
+};
+
+struct TResult{
+    char data[MAX_BUFFER_TEXT];
 };
 
 #endif //SSOO_P3_DEFINITIONS_H
