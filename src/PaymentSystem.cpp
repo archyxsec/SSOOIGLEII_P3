@@ -40,7 +40,7 @@ void get_and_process_task(sem_t *p_sem_balance_ready, sem_t *p_sem_balance_charg
 {
     wait_semaphore(p_sem_balance_ready);
     p_payment->balance = p_payment->client_initial_balance;
-    std::cout << "[Payment System] Client " << p_payment->id << " Has been charge" << std::endl;
+    std::cout << "[Payment System] Client " << p_payment->id << " Has been charge with " << p_payment->balance << " credits" << std::endl;
     signal_semaphore(p_sem_balance_charge);
 }
 

@@ -13,7 +13,6 @@
 #include <iostream>
 #include <unistd.h>
 #include "definitions.h"
-#include "Client_Normal.h"
 #include "semaphoreI.h"
 
 void get_sems(sem_t **p_sem_request_ready, sem_t **p_sem_stored_request);

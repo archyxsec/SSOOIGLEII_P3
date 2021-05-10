@@ -31,7 +31,7 @@ int g_nProcesses = N_CLIENTS + N_PAYMENT_SYSTEM;
 std::mutex queue_semaphore_management; // Mutex semaphore for critical seccion
 std::condition_variable extract_request_condition;
 std::vector<struct TProcess_t> v_clients; //vector of clients
-std::vector<TRequest_t> request_vector;
+std::vector<struct TRequest_t> request_vector;
 
 /*Payment_system PID*/
 pid_t payment_process;

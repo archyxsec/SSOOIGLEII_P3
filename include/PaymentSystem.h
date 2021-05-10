@@ -12,6 +12,7 @@
 #include <sys/stat.h>        /* For mode constants */
 #include <fcntl.h>
 #include <string>
+#include <thread>
 
 
 void get_shm_segments(int *shm_payment, struct TPayment **p_payment);

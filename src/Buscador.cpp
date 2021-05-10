@@ -9,17 +9,8 @@ int main(int argc, char **argv) {
     struct TRequest_t *request;
     create_shm_segments(&shm_payment, &payment,&shm_client, &request);
     create_sems(&sem_balance_ready, &sem_balance_charge, &sem_request_ready, &sem_stored_request);
-    //create_payment_system(PAYMENT_SYSTEM);
+    create_payment_system(PAYMENT_SYSTEM);
 
-    /*We gonna simulate a simple Payment System*/
-    /*payment->id = 0;
-    payment->client_initial_balance = 10;
-    payment->balance = 0;
-    std::cout << "[BUSCADOR] manda recargar puntos un proceso con 0 de balance y 10 de initial_balance" << std::endl;
-    signal_semaphore(sem_balance_ready);
-    wait_semaphore(sem_balance_charge);
-    std::cout << "[BUSCADOR] Saldo después de llamar a Payment_system = " << payment->balance << std::endl;
-    */
 
     t_requests_managers.push_back(std::thread(wait_requests, sem_request_ready, sem_stored_request, request));
     t_requests_managers.push_back(std::thread(manage_queue));
@@ -35,47 +26,35 @@ int main(int argc, char **argv) {
         }
     }
 
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+
     pid_t pid1 = fork();
     if(pid1 == 0){
-        char *argv[] = {(char *)"CLIENT_PREMIUM",(char*)"lol",(char*)"data/pruebatildes.txt",(char*)"data/prueba.txt",(char*)"data/La_última_sirena.txt",NULL};
-        if((execv(CLIENT_PREMIUM_PATH,argv)) == -1){
+        char *argv[] = {(char *)"CLIENT_PREMIUM_LIMIT",(char*)"lol",(char*)"2",(char*)"data/pruebatildes.txt",(char*)"data/prueba.txt",(char*)"data/La_última_sirena.txt",NULL};
+        if((execv(CLIENT_PREMIUM_LIMIT_PATH,argv)) == -1){
             fprintf(stderr,"[BUSCADOR] Error al crear cliente.\n");
             free_resources();
             std::exit(EXIT_FAILURE);
         }
     }
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+
     pid_t pid2 = fork();
     if(pid2 == 0){
-        char *argv[] = {(char *)"CLIENT_PREMIUM",(char*)"que",(char*)"data/pruebatildes.txt",NULL};
-        if((execv(CLIENT_PREMIUM_PATH,argv)) == -1){
+        char *argv[] = {(char *)"CLIENT_NORMAL",(char*)"que",(char*)"3",(char *)"data/prueba.txt",NULL};
+        if((execv(CLIENT_NORMAL_PATH,argv)) == -1){
             fprintf(stderr,"[BUSCADOR] Error al crear cliente.\n");
             free_resources();
             std::exit(EXIT_FAILURE);
         }
     }
-   /*pid_t pid1 = fork();
-    if(pid1 == 0){
-        char *argv[] = {(char *)"CLIENT_PREMIUM",(char*)"hola",(char*)"data/prueba.txt",NULL};
-        if((execv(CLIENT_PREMIUM_PATH,argv)) == -1){
-            fprintf(stderr,"[BUSCADOR] Error al crear cliente.\n");
-            free_resources();
-            std::exit(EXIT_FAILURE);
-        }
-    }*/
-
-    /*pid_t pid2 = fork();
-    if(pid2 == 0){
-        char *argv[] = {(char *)"CLIENT_PREMIUM",(char*)"hola",(char*)"data/VIVE-TU-SUEÑO.txt",NULL};
-        if((execv(CLIENT_PREMIUM_PATH,argv)) == -1){
-            fprintf(stderr,"[BUSCADOR] Error al crear cliente.\n");
-            free_resources();
-            std::exit(EXIT_FAILURE);
-        }
-    }*/
 
     std::for_each(t_requests_managers.begin(), t_requests_managers.end(), [](std::thread& t) { t.detach(); });
     //while(1);
     pause(); /*Wait for termination*/
+    free_resources();
+    close_shared_memory_segments(shm_client, shm_payment);
+    terminate_processes();
     return EXIT_SUCCESS;
 }
 
@@ -98,12 +77,12 @@ int main(int argc, char **argv) {
         });
         std::cout << "[HILO MANAGE QUEUE] Extraemos petición de la cola" << std::endl;
         choose = false;
-        std::cout << "tamaño del vector antes de crear client manager " << request_vector.size() << std::endl;
+        //std::cout << "tamaño del vector antes de crear client manager " << request_vector.size() << std::endl;
 
         //Randomize number in order to choose 80% request for premium clients, and 20% normal client
         random_number = 1 + rand() % (10);
         vip = random_number <= 8;
-        std::cout << "Numero random: " << random_number << std::endl;
+        //std::cout << "Numero random: " << random_number << std::endl;
         int i;
 
         for (i = 0; i < request_vector.size(); i++) {
@@ -112,7 +91,6 @@ int main(int argc, char **argv) {
                 choose = true;
             else if (strncmp(request_vector[i].category,NORMAL_CATEGORY,sizeof (request_vector[i].category)) == 0) choose = true;
             if (choose) {
-                std::cout << "Hemos elegido el cliente: " << request_vector[i].client_pid << std::endl;
                 strcpy(category,request_vector[i].category );
                 strcpy(word,request_vector[i].word );
                 strcpy(pipename,request_vector[i].pipename);
@@ -120,9 +98,7 @@ int main(int argc, char **argv) {
                 strcpy(v_texts,request_vector[i].v_texts);
                 client_pid = request_vector[i].client_pid;
                 request_vector.erase(request_vector.begin() + i); //Remove request for queue
-                std::cout << "Creamos client manager para cliente: " << client_pid << std::endl;
                 create_client_management(v_texts, word,pipename, initial_balance, category, client_pid);
-                std::cout << "tamaño del vector despues de crear client manager " << request_vector.size() << std::endl;
                 break;
             }
         }
@@ -134,7 +110,6 @@ void create_client_management(char *v_texts, char *word,
                               char *pipename, int initial_balance, char *category, int client_pid)
 {
     pid_t pid;
-    char fd_write_client_str[MAX_BUFFER_TEXT];
     char initial_balance_str[MAX_BUFFER_TEXT];
     char client_pid_str[MAX_BUFFER_TEXT];
     int v_text_len;
@@ -301,6 +276,7 @@ void create_sems(sem_t **sem_balance_ready, sem_t **sem_balance_charge, sem_t **
     *sem_balance_charge = create_semaphore(SEM_BALANCE_CHARGE,0);
     *sem_request_ready = create_semaphore(SEM_REQUEST_READY,0);
     *sem_stored_request = create_semaphore(SEM_STORED_REQUEST,0);
+    create_semaphore(SEM_MUTEX,1);
 }
 void close_shared_memory_segments(int shm_payment, int shm_client)
 {
@@ -317,9 +293,9 @@ void terminate_processes()
                 payment_process, strerror(errno));
     }
     /*Next We kill Clients Processes*/
-    std::cout << "\n----- [BUSCADOR] Terminating running child processes ----- " << std::endl;
+    /*std::cout << "\n----- [BUSCADOR] Terminating running child processes ----- " << std::endl;
     for (i = 0; i < v_clients.size(); i++) {
-        /* Child process alive */
+        /* Child process alive
         if (v_clients[i].pid != 0) {
             std::cout << "[BUSCADOR] Terminating " << v_clients[i].str_process_class <<
             " process [" << v_clients[i].pid << "]..." << std::endl;
@@ -328,20 +304,21 @@ void terminate_processes()
                         v_clients[i].pid, strerror(errno));
             }
         }
-    }
+    }*/
 }
 void free_resources()
 {
     std::cout << "\n----- [BUSCADOR] Free resources ----- " << std::endl;
 
     v_clients = std::vector<struct TProcess_t>();
-    request_vector = std::vector<TRequest_t>();
+    request_vector = std::vector<struct TRequest_t>();
 
     /* Semaphores */
     remove_semaphore(SEM_BALANCE_READY);
     remove_semaphore(SEM_BALANCE_CHARGE);
     remove_semaphore(SEM_REQUEST_READY);
     remove_semaphore(SEM_STORED_REQUEST);
+    remove_semaphore(SEM_MUTEX);
 
     /* Shared memory segments*/
     shm_unlink(SHM_PAYMENT);
@@ -358,6 +335,7 @@ void install_signal_handler(){
 void signal_handler(int signal){
     std::cout << "[BUSCADOR] Exiting...";
     free_resources();
+    terminate_processes();
 }
 
 

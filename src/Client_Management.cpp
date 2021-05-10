@@ -154,7 +154,6 @@ void start_finding(std::vector<Text> v_texts, char *word,
 
     n_texts = v_texts.size();
     max_threads_per_file = (N_THREADS_PER_REPLIC / n_texts);
-    std::cout << "Max threads per file = " << max_threads_per_file << std::endl;
 
     if(max_threads_per_file == 0){
         fprintf(stderr,"[CLIENT_MANAGER %i]Error, the max lines per threads are 0. The client cant be attend\n",getpid());
@@ -162,26 +161,34 @@ void start_finding(std::vector<Text> v_texts, char *word,
     }
     text_number = 0;
     begin = 1;
-    //std::cout << "Categoria = " << category << std::endl;
-    std::cout << "CLIENT_MANAGEMENT Empezamos a buscar" << std::endl;
+
     for(j=1;j<=N_THREADS_PER_REPLIC;j++){
         Text txt = v_texts[text_number];
         text_lines = txt.n_lines;
-        //std::cout << text_lines << std::endl;
-        max_lines_per_thread = (text_lines / max_threads_per_file);
-        //std::cout << "Max_lines_per_thread = " << max_lines_per_thread << std::endl;
-        end =(begin + max_lines_per_thread) - 1;
-        if((j % (max_threads_per_file)) == 0) end = text_lines;
-        if(strncmp(category,ILIMITED_PREMIUM_CATEGORY,sizeof (category)) == 0){
-            v_threads.push_back(std::thread (find_ilimited_premium_client,j,txt,begin,end, word));
-            std::cout << "CLIENT_MANAGEMENT Hilo " << j << " creado, Texto: " << txt.file_name << " begin: " << begin << " end: " << end  << std::endl;
-        }
-        if((j % (max_threads_per_file)) == 0){
+        if(end != text_lines){
+            max_lines_per_thread = (text_lines / max_threads_per_file);
+            end =(begin + max_lines_per_thread) - 1;
+            if((j % (max_threads_per_file)) == 0) end = text_lines;
+            if(strncmp(category,ILIMITED_PREMIUM_CATEGORY,sizeof (category)) == 0)
+                v_threads.push_back(std::thread (find_ilimited_premium_client,j,txt,begin,end, word));
+
+            else if(strncmp(category,PREMIUM_CATEGORY,sizeof (category)) == 0)
+                v_threads.push_back(std::thread (find_premium_client,j,txt,begin,end, word,initial_balance));
+
+            else if(strncmp(category,NORMAL_CATEGORY,sizeof (category)) == 0)
+                v_threads.push_back(std::thread (find_normal_client,j,txt,begin,end, word,initial_balance));
+
+            if((j % (max_threads_per_file)) == 0){
+                text_number++;
+                if(text_number == v_texts.size()) text_number = v_texts.size()-1;
+                begin=1;
+            }
+            else begin += max_lines_per_thread;
+        }else {
+            /*If the number of texts are odd, We fix the end*/
             text_number++;
-            if(text_number == v_texts.size()) text_number = v_texts.size()-1;
-            begin=1;
+            if(text_number >= v_texts.size()) break;
         }
-        else begin += max_lines_per_thread;
     }
     //Join the threads
     std::for_each(v_threads.begin(), v_threads.end(), [](std::thread& t) { t.join(); });
@@ -203,6 +210,101 @@ void start_finding(std::vector<Text> v_texts, char *word,
         write(clientpipe, "Sorry, We dont find coincidences.\n", 34);
 
     close(clientpipe);
+}
+void find_normal_client(int id, Text txt, int begin, int end, std::string pattern, int initial_balance){
+    std::vector<std::string> v_line_text;
+    int position;
+    int credits = initial_balance;
+
+    /*Principal Metod of searching*/
+    for(unsigned i=begin; i<=end && credits != 0;i++){
+        v_line_text = txt.getlinevector(i);
+        position = 0;
+        while(position < v_line_text.size() && credits != 0){
+            if(txt.wordwrapper(v_line_text[position]).compare(txt.wordwrapper(pattern)) == 0){
+                Coincidence_Format coin(i,pattern,txt.file_name);
+                /*find the pattern, next search the previous and post word*/
+                if(position == (v_line_text.size()-1)){
+                    /*The pattern is at finnish*/
+                    coin.set_coincidence(v_line_text[position-1],v_line_text[position],"");
+                }else if(position == 0){
+                    /*The pattern is at beginning*/
+                    coin.set_coincidence("",v_line_text[position],v_line_text[position+1]);
+                }else{
+                    coin.set_coincidence(v_line_text[position-1],v_line_text[position],v_line_text[position+1]);
+                }
+                mutex.lock();
+                add_coincidence(coin);
+                mutex.unlock();
+                credits--;
+            }
+            position++;
+        }
+    }
+}
+
+void find_premium_client(int id, Text txt, int begin, int end, std::string pattern, int initial_balance){
+    std::vector<std::string> v_line_text;
+    int position;
+    int credits = initial_balance;
+    struct TPayment *payment;
+    sem_t *sem_balance_ready, *sem_balance_charge, *sem_mutex;
+    int shm_payment;
+    /*Get shared memory segments and semaphores*/
+    get_shm_segments(&shm_payment, &payment);
+    get_sems(&sem_balance_ready, &sem_balance_charge, &sem_mutex);
+
+    /*Principal Metod of searching*/
+    for(unsigned i=begin; i<=end && credits != 0;i++){
+        v_line_text = txt.getlinevector(i);
+        position = 0;
+        while(position < v_line_text.size() && credits != 0){
+            if(txt.wordwrapper(v_line_text[position]).compare(txt.wordwrapper(pattern)) == 0){
+                Coincidence_Format coin(i,pattern,txt.file_name);
+                /*find the pattern, next search the previous and post word*/
+                if(position == (v_line_text.size()-1)){
+                    /*The pattern is at finnish*/
+                    coin.set_coincidence(v_line_text[position-1],v_line_text[position],"");
+                }else if(position == 0){
+                    /*The pattern is at beginning*/
+                    coin.set_coincidence("",v_line_text[position],v_line_text[position+1]);
+                }else{
+                    coin.set_coincidence(v_line_text[position-1],v_line_text[position],v_line_text[position+1]);
+                }
+                mutex.lock();
+                add_coincidence(coin);
+                mutex.unlock();
+                credits--;
+                if(credits == 0){
+                    /*Recharge balance*/
+                    wait_semaphore(sem_mutex);
+                    payment->id = getppid();
+                    payment->client_initial_balance = initial_balance;
+                    payment->balance = credits;
+                    std::cout << "[CLIENT MANAGEMENT " << getpid() << "] manda recargar puntos un proceso con 0 de balance y 10 de initial_balance" << std::endl;
+                    signal_semaphore(sem_balance_ready);
+                    wait_semaphore(sem_balance_charge);
+                    std::cout << "[CLIENT MANAGEMENT " << getpid() << "] Saldo después de llamar a Payment_system = " << payment->balance << std::endl;
+                    credits = payment->balance;
+                    signal_semaphore(sem_mutex);
+                }
+            }
+            position++;
+        }
+    }
+}
+void get_shm_segments(int *shm_payment, struct TPayment **p_payment)
+{
+    *shm_payment = shm_open(SHM_PAYMENT, O_RDWR, 0644);
+    *p_payment = static_cast<TPayment *>(mmap(NULL, sizeof(struct TPayment),
+                                              PROT_READ | PROT_WRITE, MAP_SHARED, *shm_payment, 0));
+}
+
+void get_sems(sem_t **p_sem_balance_ready, sem_t **p_sem_balance_charge, sem_t **p_mutex)
+{
+    *p_sem_balance_ready = get_semaphore(SEM_BALANCE_READY);
+    *p_sem_balance_charge = get_semaphore(SEM_BALANCE_CHARGE);
+    *p_mutex = get_semaphore(SEM_MUTEX);
 }
 void find_ilimited_premium_client(int id, Text txt, int begin, int end, std::string pattern)
 {

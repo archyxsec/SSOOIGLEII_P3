@@ -20,15 +20,18 @@ void get_sems(sem_t **p_sem_request_ready, sem_t **p_sem_stored_request)
 }
 void parse_argv(int argc, char **argv, char **word, char **v_texts_name)
 {
+    char Buffer[MAX_BUFFER_TEXT];
+    *v_texts_name = (char*)malloc(MAX_BUFFER_TEXT*sizeof(char));
     if(argc < 3){
         fprintf(stderr,"[CLIENT_PREMIUM %i] Error, use: ./exec/Client_Premium <pattern> [<texts>]",getpid());
         std::exit(EXIT_FAILURE);
     }
     *word = argv[1];
-    int j = 0;
-    for(int i=2; i<argc; i++){
+    strcpy(*v_texts_name, argv[2]);
+    for(int i=3; i<argc; i++){
         if(fopen(argv[i],"r") != NULL){
-            strncat(*v_texts_name,argv[i], sizeof(argv[i]));
+            sprintf(Buffer,"-%s",argv[i]);
+            strncat(*v_texts_name,Buffer, sizeof(Buffer));
         }
     }
 }
@@ -65,10 +68,8 @@ void free_resources(){
 int main(int argc, char **argv){
     sem_t *p_sem_request_ready, *p_sem_stored_request;
     struct TRequest_t *client_premium;
-    struct TRequest_t *myrequest;
-    char v_texts_name[MAX_BUFFER_TEXT];
-    char word[MAX_BUFFER_TEXT];
-    char *category[MAX_BUFFER_TEXT];
+    char *v_texts_name;
+    char *word;
     int shm_client;
     char Buffer[MAX_BUFFER_TEXT];
     char coincidences[MAX_BUFFER_TEXT];
@@ -76,21 +77,7 @@ int main(int argc, char **argv){
 
 
     //install_signal_handler();
-    //parse_argv(argc, argv, reinterpret_cast<char **>(&word), reinterpret_cast<char **>(&v_texts_name));
-
-    if(argc < 3){
-        fprintf(stderr,"[CLIENT_PREMIUM %i] Error, use: ./exec/Client_Premium <pattern> [<texts>]",getpid());
-        std::exit(EXIT_FAILURE);
-    }
-    strcpy(word,argv[1]);
-    strcpy(v_texts_name, argv[2]);
-    int j = 0;
-    for(int i=3; i<argc; i++){
-        if(fopen(argv[i],"r") != NULL){
-            sprintf(Buffer,"-%s",argv[i]);
-            strncat(v_texts_name,Buffer, sizeof(Buffer));
-        }
-    }
+    parse_argv(argc, argv, reinterpret_cast<char **>(&word), reinterpret_cast<char **>(&v_texts_name));
 
     /*Create the pipe*/
     sprintf(pipename,"/tmp/client%d",getpid());
@@ -111,7 +98,6 @@ int main(int argc, char **argv){
     signal_semaphore(p_sem_stored_request);
     mypipe = open(pipename, O_RDONLY);
 
-    std::cout << "[CLIENT_PREMIUM " << getpid() << "] Coincidences:\n" << std::endl;
     while(read(mypipe,coincidences,MAX_BUFFER_TEXT) > 0) std::cout << coincidences;
     std::cout << "[CLIENT_PREMIUM " << getpid() << "] Im Finnish!" << std::endl;
     close(mypipe);
