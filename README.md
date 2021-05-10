@@ -5,6 +5,10 @@
 [![Partners](https://img.shields.io/badge/Partners-2-red)](https://github.com/BlaZzes10/python/graphs/contributors)
 ![Version](https://img.shields.io/badge/version-1.0-brightgreen)
 
+## **Esquema**
+
+![imagen](https://user-images.githubusercontent.com/52278758/117727510-65993300-b1e8-11eb-92a8-8196784eee2e.png)
+
 ## **Requeriments:** 
 `g++` with __c++11__ standard
 
