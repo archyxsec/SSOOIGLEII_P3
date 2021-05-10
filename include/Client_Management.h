@@ -39,5 +39,5 @@ void free_resources();
 int get_number_coindicences();
 void start_finding(std::vector<Text> v_texts, char *word,
                    char *pipename, int initial_balance, char *category, int client_pid);
-std::string getCoincidences();
+std::string getCoincidences(int client_pid);
 #endif //SSOO_P3_CLIENT_MANAGEMENT_H

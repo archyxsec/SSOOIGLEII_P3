@@ -114,11 +114,11 @@ int get_number_coindicences()
 {
     return coincidences.size();
 }
-std::string getCoincidences(){
+std::string getCoincidences(int client_pid){
     std::string format_line = "";
     while(!coincidences.empty())
     {
-        format_line += BLUE + coincidences.top().get_file_name() + RESET + " :: línea " + MAGENTA + std::to_string(coincidences.top().line_number)
+        format_line += "RESULTS FOR CLIENT: " + std::to_string(client_pid) + " " + BLUE + coincidences.top().get_file_name() + RESET + " :: línea " + MAGENTA + std::to_string(coincidences.top().line_number)
                        + RESET + " :: " + "... "
                        + coincidences.top().coincidence.previus_word + " "
                        + RED + coincidences.top().coincidence.word + RESET +
@@ -174,7 +174,7 @@ void start_finding(std::vector<Text> v_texts, char *word,
         if((j % (max_threads_per_file)) == 0) end = text_lines;
         if(strncmp(category,ILIMITED_PREMIUM_CATEGORY,sizeof (category)) == 0){
             v_threads.push_back(std::thread (find_ilimited_premium_client,j,txt,begin,end, word));
-            //std::cout << "CLIENT_MANAGEMENT Hilo " << j << " creado, Texto: " << txt.file_name << " begin: " << begin << " end: " << end  << std::endl;
+            std::cout << "CLIENT_MANAGEMENT Hilo " << j << " creado, Texto: " << txt.file_name << " begin: " << begin << " end: " << end  << std::endl;
         }
         if((j % (max_threads_per_file)) == 0){
             text_number++;
@@ -189,7 +189,7 @@ void start_finding(std::vector<Text> v_texts, char *word,
     if(get_number_coindicences() > 0){
         //char *coincidences_string_format = getCoincidences();
         //std::cout << coincidences_string_format << std::endl;
-        coincidences_string_format = getCoincidences();
+        coincidences_string_format = getCoincidences(client_pid);
         /*Open the pipe*/
         write(clientpipe, coincidences_string_format.c_str(), coincidences_string_format.size());
         std::this_thread::sleep_for(std::chrono::milliseconds(600)); // Finalize the write

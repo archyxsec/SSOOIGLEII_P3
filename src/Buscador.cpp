@@ -27,7 +27,7 @@ int main(int argc, char **argv) {
     /*Create one client premium test*/
     pid_t pid = fork();
     if(pid == 0){
-        char *argv[] = {(char *)"CLIENT_PREMIUM",(char*)"lol",(char*)"data/pruebatildes.txt",NULL};
+        char *argv[] = {(char *)"CLIENT_PREMIUM",(char*)"hola",(char*)"data/pruebatildes.txt",(char*)"data/prueba.txt",(char*)"data/La_última_sirena.txt",NULL};
         if((execv(CLIENT_PREMIUM_PATH,argv)) == -1){
             fprintf(stderr,"[BUSCADOR] Error al crear cliente.\n");
             free_resources();
@@ -37,16 +37,45 @@ int main(int argc, char **argv) {
 
     pid_t pid1 = fork();
     if(pid1 == 0){
-        char *argv[] = {(char *)"CLIENT_PREMIUM",(char*)"hola",(char*)"data/prueba.txt",NULL};
+        char *argv[] = {(char *)"CLIENT_PREMIUM",(char*)"lol",(char*)"data/pruebatildes.txt",(char*)"data/prueba.txt",(char*)"data/La_última_sirena.txt",NULL};
         if((execv(CLIENT_PREMIUM_PATH,argv)) == -1){
             fprintf(stderr,"[BUSCADOR] Error al crear cliente.\n");
             free_resources();
             std::exit(EXIT_FAILURE);
         }
     }
+    pid_t pid2 = fork();
+    if(pid2 == 0){
+        char *argv[] = {(char *)"CLIENT_PREMIUM",(char*)"que",(char*)"data/pruebatildes.txt",NULL};
+        if((execv(CLIENT_PREMIUM_PATH,argv)) == -1){
+            fprintf(stderr,"[BUSCADOR] Error al crear cliente.\n");
+            free_resources();
+            std::exit(EXIT_FAILURE);
+        }
+    }
+   /*pid_t pid1 = fork();
+    if(pid1 == 0){
+        char *argv[] = {(char *)"CLIENT_PREMIUM",(char*)"hola",(char*)"data/prueba.txt",NULL};
+        if((execv(CLIENT_PREMIUM_PATH,argv)) == -1){
+            fprintf(stderr,"[BUSCADOR] Error al crear cliente.\n");
+            free_resources();
+            std::exit(EXIT_FAILURE);
+        }
+    }*/
 
-    std::for_each(t_requests_managers.begin(), t_requests_managers.end(), [](std::thread& t) { t.join(); });
+    /*pid_t pid2 = fork();
+    if(pid2 == 0){
+        char *argv[] = {(char *)"CLIENT_PREMIUM",(char*)"hola",(char*)"data/VIVE-TU-SUEÑO.txt",NULL};
+        if((execv(CLIENT_PREMIUM_PATH,argv)) == -1){
+            fprintf(stderr,"[BUSCADOR] Error al crear cliente.\n");
+            free_resources();
+            std::exit(EXIT_FAILURE);
+        }
+    }*/
+
+    std::for_each(t_requests_managers.begin(), t_requests_managers.end(), [](std::thread& t) { t.detach(); });
     //while(1);
+    pause(); /*Wait for termination*/
     return EXIT_SUCCESS;
 }
 
@@ -61,13 +90,15 @@ int main(int argc, char **argv) {
     int client_pid;
 
     for (;;) {
-        choose = false;
 
         std::unique_lock<std::mutex> ul(queue_semaphore_management);
+
         extract_request_condition.wait(ul, [] {
             return request_vector.size() > 0;
         });
         std::cout << "[HILO MANAGE QUEUE] Extraemos petición de la cola" << std::endl;
+        choose = false;
+        std::cout << "tamaño del vector antes de crear client manager " << request_vector.size() << std::endl;
 
         //Randomize number in order to choose 80% request for premium clients, and 20% normal client
         random_number = 1 + rand() % (10);
@@ -79,7 +110,7 @@ int main(int argc, char **argv) {
             if (vip && (strncmp(request_vector[i].category,PREMIUM_CATEGORY,sizeof (request_vector[i].category))==0 ||
                     strncmp(request_vector[i].category,ILIMITED_PREMIUM_CATEGORY,sizeof (request_vector[i].category))==0 ))
                 choose = true;
-            else if (strncmp(request_vector[i].category,NORMAL_CATEGORY,sizeof (request_vector[i].category))) choose = true;
+            else if (strncmp(request_vector[i].category,NORMAL_CATEGORY,sizeof (request_vector[i].category)) == 0) choose = true;
             if (choose) {
                 std::cout << "Hemos elegido el cliente: " << request_vector[i].client_pid << std::endl;
                 strcpy(category,request_vector[i].category );
@@ -303,7 +334,8 @@ void free_resources()
 {
     std::cout << "\n----- [BUSCADOR] Free resources ----- " << std::endl;
 
-    v_clients.clear();
+    v_clients = std::vector<struct TProcess_t>();
+    request_vector = std::vector<TRequest_t>();
 
     /* Semaphores */
     remove_semaphore(SEM_BALANCE_READY);
