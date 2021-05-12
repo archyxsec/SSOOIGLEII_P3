@@ -14,7 +14,8 @@
 
 ## **Prepare**
 ```bash
-make
+git clone https://github.com/BlaZzes10/SSOOIGLEII_P3.git
+cd SSOOIGLEII_P3 && make
 ```
 
 ## **Run**
