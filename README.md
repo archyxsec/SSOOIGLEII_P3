@@ -1,4 +1,4 @@
-# SSOOIGLEII Continuación Práctica 3
+# `ssooigle(2)` Práctica 3
 
 ![Build Status](https://img.shields.io/badge/Maintained%3F-yes-green.svg) 
 ![Creator](https://img.shields.io/badge/Creator-BlaZzes10%20and%20SergioSanchezIglesias-blue)
