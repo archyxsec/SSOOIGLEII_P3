@@ -39,9 +39,6 @@ void parse_argv(int argc, char **argv, char **word, char **v_texts_name, int *n_
 
 void free_resources(){
 
-    remove_semaphore(SEM_REQUEST_READY);
-    remove_semaphore(SEM_STORED_REQUEST);
-
     shm_unlink(SHM_CLIENT);
     unlink(pipename);
 
@@ -82,6 +79,7 @@ int main(int argc, char **argv){
     while(read(mypipe,coincidences,MAX_BUFFER_TEXT) > 0) std::cout << coincidences;
     std::cout << "[CLIENT_PREMIUM_LIMIT " << getpid() << "] Im Finnish!" << std::endl;
     close(mypipe);
+
     free_resources();
     return EXIT_SUCCESS;
 }

@@ -1,32 +1,60 @@
-//
-// Created by BlaZzes on 21/04/2021.
-//
+/******************************************************
+* Project : Práctica 3 de Sistemas Operativos II
+*
+* Program name : definitions.h
+*
+* Author : Tomás Jesús García López y Sergio Sánchez Iglesias
+*
+* Date created : 21/04/2021
+*
+* Purpose : definiciones y constantes
+*
+*
+* Revision History:
+*
+* Date          Author          Ref      Revision
+* 25/04/2021    Tomás           1        incompatibilidad entre std::string y memoria compartida en C.
+*
+*
+|********************************************************/
 
 #ifndef SSOO_P3_DEFINITIONS_H
 #define SSOO_P3_DEFINITIONS_H
 
-#include <iostream>
-#include <string>
-#include <condition_variable>
+/* C Libraries */
+#include <sys/mman.h>
+#include <sys/stat.h>        /* For mode constants */
 #include <signal.h>
 #include <sys/types.h>
 #include <string.h>
+#include <unistd.h>
+#include <fcntl.h>
+/* C++11 Libraries */
+#include <iostream>
+#include <string>
+#include <condition_variable>
 #include <array>
+#include <mutex>
+#include <vector>
+#include <thread>
+#include <algorithm>
+#include <random>
+/* Self includes */
 #include "Text.h"
 
 #define SEM_BALANCE_READY "sem_balance_ready"
 #define SEM_BALANCE_CHARGE "sem_balance_charge"
 #define SEM_REQUEST_READY "sem_request_ready"
 #define SEM_STORED_REQUEST "sem_stored_request"
+#define SEM_REPLIC_FINISH "sem_replic_finish"
 #define SEM_MUTEX "sem_mutex"
 #define SHM_PAYMENT "shm_payment"
 #define SHM_CLIENT "shm_client"
-#define CLIENT_PATH "./exec/client"
+#define DATA_PATH "data/"
 #define CLIENT_NORMAL_PATH "./exec/Client_Normal"
 #define CLIENT_PREMIUM_PATH "./exec/Client_Premium"
 #define CLIENT_PREMIUM_LIMIT_PATH "./exec/Client_Premium_Limit"
 #define CLIENT_MANAGEMENT_PATH "./exec/Client_Management"
-#define CLIENT_CLASS "CLIENT"
 #define PAYMENT_SYSTEM_PATH "./exec/PaymentSystem"
 #define PAYMENT_SYSTEM_CLASS "PAYMENT_SYSTEM"
 #define ILIMITED_PREMIUM_CATEGORY "ILIMITED_PREMIUM"
@@ -36,11 +64,10 @@
 #define N_PAYMENT_SYSTEM 1
 #define N_REPLICS 4
 #define N_THREADS_PER_REPLIC 8
-#define BUFFER_RESULTS 5000
 #define MAX_BUFFER_TEXT 1024
 
 
-enum ProcessClass_t {CLIENT, PAYMENT_SYSTEM};
+enum ProcessClass_t {ILIMITED_PREMIUM_CLIENT,PREMIUM_CLIENT,NORMAL_CLIENT, PAYMENT_SYSTEM};
 
 struct TProcess_t {
     enum ProcessClass_t clas;
