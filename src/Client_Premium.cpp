@@ -35,27 +35,18 @@ void parse_argv(int argc, char **argv, char **word, char **v_texts_name)
         }
     }
 }
-/*void install_signal_handler() {
-    if ((signal(SIGUSR1, signal_handler)) == SIG_ERR) {
-        fprintf(stderr, "[MANAGER] Error installing signal handler: %s.\n", strerror(errno));
-        exit(EXIT_FAILURE);
-    }
-}*/
-
-/*void signal_handler(int signal){
-    //char buffer[BUFFER_RESULTS];
-    char coincidences[MAX_BUFFER_TEXT];
-    int mypipe = open(pipename, O_RDONLY);
-    std::cout << "[CLIENT_PREMIUM " << getpid() << "] Client Manager send me the results!" << std::endl;
-    //while((read(p[LECTURA],&coincidences,MAX_BUFFER_TEXT)) > 0){
-    //    std::cout << coincidences;
-    //}
-    std::cout << "[CLIENT_PREMIUM " << getpid() << "] Coincidences:\n" << std::endl;
-    while(read(mypipe,coincidences,MAX_BUFFER_TEXT) > 0) std::cout << coincidences;
-    std::cout << "[CLIENT_PREMIUM " << getpid() << "] Im Finnish!" << std::endl;
-    close(mypipe);
+void signal_handler(int signal){
+    std::cout << "[CLIENT_PREMIUM] Exiting..." << std::endl;
     free_resources();
-}*/
+}
+
+void install_signal_handler() {
+    if ((signal(SIGUSR1, signal_handler)) == SIG_ERR) {
+        fprintf(stderr, "[CLIENT_PREMIUM] Error installing signal handler: %s.\n", strerror(errno));
+        std::exit(EXIT_FAILURE);
+    }
+}
+
 void free_resources(){
 
     shm_unlink(SHM_CLIENT);
@@ -68,12 +59,11 @@ int main(int argc, char **argv){
     char *v_texts_name;
     char *word;
     int shm_client;
-    char Buffer[MAX_BUFFER_TEXT];
     char coincidences[MAX_BUFFER_TEXT];
     int mypipe;
 
 
-    //install_signal_handler();
+    install_signal_handler();
     parse_argv(argc, argv, reinterpret_cast<char **>(&word), reinterpret_cast<char **>(&v_texts_name));
 
     /*Create the pipe*/
@@ -98,7 +88,7 @@ int main(int argc, char **argv){
     while(read(mypipe,coincidences,MAX_BUFFER_TEXT) > 0) std::cout << coincidences;
     std::cout << "[CLIENT_PREMIUM " << getpid() << "] Im Finnish!" << std::endl;
     close(mypipe);
-
+    pause();
     free_resources();
     return EXIT_SUCCESS;
 }

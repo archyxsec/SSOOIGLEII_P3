@@ -36,6 +36,17 @@ void parse_argv(int argc, char **argv, char **word, char **v_texts_name, int *n_
         }
     }
 }
+void signal_handler(int signal){
+    std::cout << "[CLIENT_PREMIUM_LIMIT] Exiting..." << std::endl;
+    free_resources();
+}
+
+void install_signal_handler() {
+    if ((signal(SIGUSR1, signal_handler)) == SIG_ERR) {
+        fprintf(stderr, "[CLIENT_PREMIUM_LIMIT] Error installing signal handler: %s.\n", strerror(errno));
+        std::exit(EXIT_FAILURE);
+    }
+}
 
 void free_resources(){
 
@@ -54,7 +65,7 @@ int main(int argc, char **argv){
     int mypipe;
 
 
-    //install_signal_handler();
+    install_signal_handler();
     parse_argv(argc, argv, &word, &v_texts_name, &n_credits);
 
     /*Create the pipe*/
@@ -79,7 +90,7 @@ int main(int argc, char **argv){
     while(read(mypipe,coincidences,MAX_BUFFER_TEXT) > 0) std::cout << coincidences;
     std::cout << "[CLIENT_PREMIUM_LIMIT " << getpid() << "] Im Finnish!" << std::endl;
     close(mypipe);
-
+    pause();
     free_resources();
     return EXIT_SUCCESS;
 }
