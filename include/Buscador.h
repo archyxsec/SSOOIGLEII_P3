@@ -30,14 +30,18 @@
 
 int g_nProcesses = N_CLIENTS + N_PAYMENT_SYSTEM;
 std::mutex queue_semaphore_management; // Mutex semaphore for guaranted exclusive access to critical seccion
+std::mutex termination_client_management; // Mutex semaphore for guaranted exclusive access to critical seccion
+std::mutex mutex; // Queue access
 std::condition_variable extract_request_condition;
+std::condition_variable n_clients_attend;
 std::vector<struct TProcess_t> v_clients; //vector of clients processes
 std::vector<struct TRequest_t> request_vector(0);
 std::atomic<int> n_replics(0); //atomic n_replics for client_management processes control.
 
 /*Payment_system PID*/
 pid_t payment_process;
-std::atomic<int> total_clients_attends (0);
+int total_clients_attends = 0;
+int total_clients_requests = 0;
 
 /******************************** CLIENT REQUESTS MANAGEMEN *****************************************************/
 [[noreturn]] void manage_clients_management_termination(sem_t *sem_replic_finish);

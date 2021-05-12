@@ -16,6 +16,10 @@
 * 25/04/2021    Tomás           1        incompatibilidad entre std::string y memoria compartida en C.
 *
 *
+*
+* 13/05/2021    Tomás           x        Correcta sincronización de Hilos
+*
+*
 |********************************************************/
 
 #include "../include/Buscador.h"
@@ -63,7 +67,7 @@ int main(int argc, char **argv) {
             free_resources();
             std::exit(EXIT_SUCCESS);
         }
-        extract_request_condition.notify_all();
+        extract_request_condition.notify_one();
     }
 }
 
@@ -71,15 +75,18 @@ int main(int argc, char **argv) {
 
     for(;;){
         std::unique_lock<std::mutex> ul(queue_semaphore_management);
-        signal_semaphore(sem_request_ready);
-        if(total_clients_attends < N_CLIENTS){
+        if(total_clients_requests == N_CLIENTS){
+            extract_request_condition.notify_one();
+        }else{
+            signal_semaphore(sem_request_ready);
             wait_semaphore(sem_stored_request);
             std::cout << BOLDWHITE << "[BUSCADOR WAIT REQUESTS THREAD] " << RESET << RED << request->client_pid << RESET
                       << " client request accepted" << std::endl;
             request_vector.push_back(*request);
+            extract_request_condition.notify_one();
+            extract_request_condition.wait(ul);
+            total_clients_requests++;
         }
-        extract_request_condition.notify_one();
-        extract_request_condition.wait(ul);
     }
 }
 
@@ -98,7 +105,7 @@ int main(int argc, char **argv) {
         std::unique_lock<std::mutex> ul(queue_semaphore_management);
 
         extract_request_condition.wait(ul, [] {
-            return (request_vector.size() > 0) && (n_replics < N_REPLICS);
+            return (request_vector.size() > 0) && ((n_replics < N_REPLICS) && (n_replics >=0));
         });
         std::cout << BOLDWHITE << "[HILO MANAGE QUEUE] Extract a request" << RESET<< std::endl;
         choose = false;
@@ -109,8 +116,8 @@ int main(int argc, char **argv) {
         random_number = 1 + rand() % (10);
         vip = random_number <= 8;
         int i;
-
         for (i = 0; i < request_vector.size(); i++) {
+
             if (vip && (strncmp(request_vector[i].category,PREMIUM_CATEGORY,sizeof (request_vector[i].category))==0 ||
                     strncmp(request_vector[i].category,ILIMITED_PREMIUM_CATEGORY,sizeof (request_vector[i].category))==0 ))
                 choose = true;
@@ -129,8 +136,7 @@ int main(int argc, char **argv) {
                 break;
             }
         }
-
-        extract_request_condition.notify_all();
+        extract_request_condition.notify_one();
    }
 }
 void create_client_management(char *v_texts, char *word,
@@ -312,9 +318,10 @@ void create_aleatory_clients(int n_clients)
         std::cout << "Process " << process.str_process_class << " Created with following arguments:" << std::endl;
         for(int x=0;x<argv_index; x++) std::cout << argv[x] << " ";
         std::cout << std::endl;
+        extract_request_condition.notify_all(); // Notify manague queue
     }
 
-    std::cout << "[BUSCADOR] " << n_clients << " clients created." << std::endl;
+    std::cout << BOLDWHITE << "[BUSCADOR] " << RESET << BOLDCYAN << n_clients << RESET " clients created." << std::endl;
 
 }
 

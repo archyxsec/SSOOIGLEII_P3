@@ -20,9 +20,9 @@ void get_shm_segments(int *shm_client, struct TRequest_t **p_request);
 void parse_argv(int argc, char **argv, char **word, char **v_texts_name);
 
 /*Process Communication*/
-//void install_signal_handler();
+void install_signal_handler();
 
-//void signal_handler(int signal);
+void signal_handler(int signal);
 void free_resources();
 
 #endif //SSOO_P3_CLIENT_PREMIUM_H

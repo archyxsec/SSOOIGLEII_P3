@@ -1,4 +1,4 @@
-#include "../include/Client_Premium_Limit.h"
+#include "../include/Client_Normal.h"
 
 #define LECTURA 0
 #define ESCRITURA 1
@@ -37,6 +37,19 @@ void parse_argv(int argc, char **argv, char **word, char **v_texts_name, int *n_
     }
 }
 
+void signal_handler(int signal){
+    std::cout << "[CLIENT_NORMAL] Exiting..." << std::endl;
+    free_resources();
+    std::exit(EXIT_SUCCESS);
+}
+
+
+void install_signal_handler(){
+    if (signal(SIGINT, signal_handler) == SIG_ERR) {
+        fprintf(stderr, "%s[CLIENT_NORMAL] Error installing signal handler: %s%s.\n",RED, strerror(errno),RESET);
+        std::exit(EXIT_FAILURE);
+    }
+}
 void free_resources(){
 
 
@@ -55,7 +68,7 @@ int main(int argc, char **argv){
     int mypipe;
 
 
-    //install_signal_handler();
+    install_signal_handler();
     parse_argv(argc, argv, &word, &v_texts_name, &n_credits);
 
     /*Create the pipe*/
@@ -78,9 +91,10 @@ int main(int argc, char **argv){
     mypipe = open(pipename, O_RDONLY);
 
     while(read(mypipe,coincidences,MAX_BUFFER_TEXT) > 0) std::cout << coincidences;
+
     std::cout << "[CLIENT_NORMAL " << getpid() << "] Im Finnish!" << std::endl;
     close(mypipe);
-
+    pause();
     free_resources();
     return EXIT_SUCCESS;
 }
