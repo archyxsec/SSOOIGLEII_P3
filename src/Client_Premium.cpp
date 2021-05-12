@@ -36,12 +36,12 @@ void parse_argv(int argc, char **argv, char **word, char **v_texts_name)
     }
 }
 void signal_handler(int signal){
-    std::cout << "[CLIENT_PREMIUM] Exiting..." << std::endl;
+    std::cout << "[CLIENT_PREMIUM " << getpid() << "] Exiting..." << std::endl;
     free_resources();
 }
 
 void install_signal_handler() {
-    if ((signal(SIGUSR1, signal_handler)) == SIG_ERR) {
+    if ((signal(SIGINT, signal_handler)) == SIG_ERR) {
         fprintf(stderr, "[CLIENT_PREMIUM] Error installing signal handler: %s.\n", strerror(errno));
         std::exit(EXIT_FAILURE);
     }

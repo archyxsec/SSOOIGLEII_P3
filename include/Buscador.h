@@ -40,7 +40,8 @@ std::atomic<int> n_replics(0); //atomic n_replics for client_management processe
 
 /*Payment_system PID*/
 pid_t payment_process;
-std::atomic<int> total_clients_attends (0);
+int total_clients_attends = 0;
+int total_clients_requests = 0;
 
 /******************************** CLIENT REQUESTS MANAGEMEN *****************************************************/
 [[noreturn]] void manage_clients_management_termination(sem_t *sem_replic_finish);

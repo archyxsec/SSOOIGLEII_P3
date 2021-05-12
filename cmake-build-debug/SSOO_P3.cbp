@@ -87,9 +87,6 @@
 		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/include/Buscador.h">
 			<Option target="SSOO_P3"/>
 		</Unit>
-		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/include/Client.h">
-			<Option target="SSOO_P3"/>
-		</Unit>
 		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/include/Client_Management.h">
 			<Option target="SSOO_P3"/>
 		</Unit>

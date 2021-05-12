@@ -91,6 +91,7 @@ int main(int argc, char **argv){
     mypipe = open(pipename, O_RDONLY);
 
     while(read(mypipe,coincidences,MAX_BUFFER_TEXT) > 0) std::cout << coincidences;
+
     std::cout << "[CLIENT_NORMAL " << getpid() << "] Im Finnish!" << std::endl;
     close(mypipe);
     pause();

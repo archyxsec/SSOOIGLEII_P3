@@ -42,7 +42,7 @@ void signal_handler(int signal){
 }
 
 void install_signal_handler() {
-    if ((signal(SIGUSR1, signal_handler)) == SIG_ERR) {
+    if ((signal(SIGINT, signal_handler)) == SIG_ERR) {
         fprintf(stderr, "[CLIENT_PREMIUM_LIMIT] Error installing signal handler: %s.\n", strerror(errno));
         std::exit(EXIT_FAILURE);
     }

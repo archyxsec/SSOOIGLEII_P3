@@ -16,6 +16,10 @@
 * 25/04/2021    Tomás           1        incompatibilidad entre std::string y memoria compartida en C.
 *
 *
+*
+* 13/05/2021    Tomás           x        Correcta sincronización de Hilos
+*
+*
 |********************************************************/
 
 #include "../include/Buscador.h"
@@ -63,7 +67,7 @@ int main(int argc, char **argv) {
             free_resources();
             std::exit(EXIT_SUCCESS);
         }
-        extract_request_condition.notify_all();
+        extract_request_condition.notify_one();
     }
 }
 
@@ -71,18 +75,18 @@ int main(int argc, char **argv) {
 
     for(;;){
         std::unique_lock<std::mutex> ul(queue_semaphore_management);
-
-        signal_semaphore(sem_request_ready);
-        wait_semaphore(sem_stored_request);
-        std::cout << BOLDWHITE << "[BUSCADOR WAIT REQUESTS THREAD] " << RESET << RED << request->client_pid << RESET
-                  << " client request accepted" << std::endl;
-        request_vector.push_back(*request);
-        extract_request_condition.notify_one();
-        extract_request_condition.wait(ul);
-        //extract_request_condition.wait(ul);
-
-        //std::unique_lock<std::mutex> ul2(termination_client_management);
-        //n_clients_attend.wait(ul,[]{return total_clients_attends < N_CLIENTS;});
+        if(total_clients_requests == N_CLIENTS){
+            extract_request_condition.notify_one();
+        }else{
+            signal_semaphore(sem_request_ready);
+            wait_semaphore(sem_stored_request);
+            std::cout << BOLDWHITE << "[BUSCADOR WAIT REQUESTS THREAD] " << RESET << RED << request->client_pid << RESET
+                      << " client request accepted" << std::endl;
+            request_vector.push_back(*request);
+            extract_request_condition.notify_one();
+            extract_request_condition.wait(ul);
+            total_clients_requests++;
+        }
     }
 }
 

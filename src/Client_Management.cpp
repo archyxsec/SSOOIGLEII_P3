@@ -72,7 +72,6 @@ void start_finding(std::vector<Text> v_texts, char *word,
     clientpipe = open(pipename, O_WRONLY);
 
     //Next, We divide the work by threads
-
     n_texts = v_texts.size();
     max_threads_per_file = (N_THREADS_PER_REPLIC / n_texts);
 
@@ -117,20 +116,13 @@ void start_finding(std::vector<Text> v_texts, char *word,
     try{
         fut = prom.get_future();
         if(get_number_coindicences() > 0){
-            //char *coincidences_string_format = getCoincidences();
-            //std::cout << coincidences_string_format << std::endl;
             coincidences_string_format = getCoincidences(client_pid);
             /*Open the pipe*/
             write(clientpipe, coincidences_string_format.c_str(), coincidences_string_format.size());
-            std::this_thread::sleep_for(std::chrono::milliseconds(300)); // Finalize the write
+            std::this_thread::sleep_for(std::chrono::milliseconds(400)); // Finalize the write
             std::cout << BOLDYELLOW << "[CLIENT MANAGEMENT " << RESET << YELLOW << getpid() << RESET << BOLDYELLOW
                 <<"]" << RESET << BOLDWHITE
                 << " send the result to client: " << RESET << BOLDCYAN << client_pid  << RESET << std::endl;
-            if(kill(client_pid,SIGUSR1) == -1){
-                fprintf(stderr,"%s[CLIENT_MANAGER %i]Error%s, We cannot send signal to Client %i\n",RED,getpid(),RESET,client_pid);
-                free_resources();
-                std::exit(EXIT_FAILURE);
-            }
         } else
             write(clientpipe, "Sorry, We dont find coincidences.\n", 34);
 
