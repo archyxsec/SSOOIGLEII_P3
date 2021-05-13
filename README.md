@@ -23,6 +23,8 @@ También se ha controlado si uno de los hilos del Client_Management genera una e
 
 En general, hemos combinado todos los conocimientos, y más... adquiridos durante este curso, combinando conocimientos de C y C++ para el desarrollo de esta práctica explotando al máximo todo el potencial de nuestro computador al paralelizar hilos y procesos, así como sería en un *entorno real*.
 
+Es posible que algunos resultados se muestren con algo de ruido por la impresión con colores y la concurrencia de procesos y hilos.
+
 El día de la entrega cambiaré el acceso al repositorio para que sea público y este al acceso de todos!.
 
 ## **Requeriments:** 
