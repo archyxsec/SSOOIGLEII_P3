@@ -26,7 +26,7 @@ Client_Normal: ${SOURCE}Client_Normal.cpp ${SOURCE}mycmp.cpp ${SOURCE}Text.cpp $
 PaymentSystem: ${SOURCE}PaymentSystem.cpp ${SOURCE}semaphoreI.cpp
 	${CC} $^ -o ${EXEC}$@ ${CFLAGS}
 
-Prueba:
+solution:
 	${EXEC}ssooigle
 
 clean:
