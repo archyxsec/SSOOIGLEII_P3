@@ -71,12 +71,12 @@ int main(int argc, char **argv) {
     for(;;){
         wait_semaphore(sem_replic_finish);
         n_replics--;
-        total_clients_attends++;
+        g_total_clients_attends++;
         std::cout << "[THREAD MANAGER FOR CLIENTS TERMINATION] n_replics decremented. N_replics = " << n_replics << std::endl;
-        std::cout << "[THREAD MANAGER FOR CLIENTS TERMINATION] clients satisfied = " << total_clients_attends << std::endl;
+        std::cout << "[THREAD MANAGER FOR CLIENTS TERMINATION] clients satisfied = " << g_total_clients_attends << std::endl;
         std::cout << "[THREAD MANAGER FOR CLIENTS TERMINATION] request vector size= " << request_vector.size() << std::endl;
 
-        if(total_clients_attends == N_CLIENTS){
+        if(g_total_clients_attends == N_CLIENTS){
             std::cout << "[BUSCADOR] All clients satisfied" << std::endl;
             terminate_processes();
             free_resources();
@@ -90,7 +90,7 @@ int main(int argc, char **argv) {
 
     for(;;){
         std::unique_lock<std::mutex> ul(queue_semaphore_management);
-        if(total_clients_requests == N_CLIENTS){
+        if(g_total_clients_requests == N_CLIENTS){
             extract_request_condition.notify_one();
         }else{
             signal_semaphore(sem_request_ready);
@@ -100,7 +100,7 @@ int main(int argc, char **argv) {
             request_vector.push_back(*request);
             extract_request_condition.notify_one();
             extract_request_condition.wait(ul);
-            total_clients_requests++;
+            g_total_clients_requests++;
         }
     }
 }

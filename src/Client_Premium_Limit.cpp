@@ -16,7 +16,7 @@
 * 05/05/2021    Sergio          1        Creado main y funciones de manejo de semáforos y memoria compartida
 * 10/05/2021    Sergio          2        Implementadas resto de funciones
 * 13/05/2021    Sergio          3        Eliminadas funciones comunes a todos los clientes,estan en Clients_Common
-*
+* 13/05/2021    Tomás           4        Medido Tiempo desde que se envía la petición hasta que se obtiene resultados
 *
 |********************************************************/
 
@@ -43,6 +43,7 @@ int main(int argc, char **argv){
     get_sems(&p_sem_request_ready, &p_sem_stored_request);
     std::cout << "[CLIENT_PREMIUM_LIMIT " << getpid() << "] I'm gonna send the request" << std::endl;
     /*Rendezvouz patron to send the request*/
+    auto tstart = std::chrono::high_resolution_clock::now();
     wait_semaphore(p_sem_request_ready);
 
     client_premium->client_pid = getpid();
@@ -57,8 +58,12 @@ int main(int argc, char **argv){
 
     /*Wait and print the results*/
     while(read(mypipe,coincidences,MAX_BUFFER_TEXT) > 0) std::cout << coincidences;
+    auto tfin = std::chrono::high_resolution_clock::now();
+    auto time = std::chrono::duration_cast<std::chrono::seconds>(tfin - tstart);
     std::cout << "[CLIENT_PREMIUM_LIMIT " << getpid() << "] Im Finnish!" << std::endl;
     close(mypipe);
+    std::cout << BOLDMAGENTA << "[CLIENT_PREMIUM_LIMIT " << getpid() << "]" << RESET
+              <<  "Time waiting for my results: " << BLUE << time.count() << RESET << "s" << std::endl;
     pause(); // wait for Buscador signal to termination
     free_resources();
     return EXIT_SUCCESS;

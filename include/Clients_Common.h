@@ -21,7 +21,7 @@
 #define SSOO_P3_CLIENTS_COMMON_H
 
 #define _POSIX_SOURCE // for pause(2)
-
+#include <chrono>
 #include "definitions.h"
 #include "semaphoreI.h"
 #include "colors.h"
