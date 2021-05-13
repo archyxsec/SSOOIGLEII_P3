@@ -99,6 +99,9 @@
 		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/include/Client_Premium_Limit.h">
 			<Option target="SSOO_P3"/>
 		</Unit>
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/include/Clients_Common.h">
+			<Option target="SSOO_P3"/>
+		</Unit>
 		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/include/Coincidence_Format.h">
 			<Option target="SSOO_P3"/>
 		</Unit>
@@ -127,6 +130,9 @@
 			<Option target="SSOO_P3"/>
 		</Unit>
 		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/src/Client_Premium_Limit.cpp">
+			<Option target="SSOO_P3"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/src/Clients_Common.cpp">
 			<Option target="SSOO_P3"/>
 		</Unit>
 		<Unit filename="/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/src/Coincidence_Format.cpp">

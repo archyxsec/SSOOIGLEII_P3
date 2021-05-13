@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/src/Client_Normal.cpp" "/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/CMakeFiles/SSOO_P3.dir/src/Client_Normal.cpp.o"
   "/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/src/Client_Premium.cpp" "/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/CMakeFiles/SSOO_P3.dir/src/Client_Premium.cpp.o"
   "/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/src/Client_Premium_Limit.cpp" "/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/CMakeFiles/SSOO_P3.dir/src/Client_Premium_Limit.cpp.o"
+  "/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/src/Clients_Common.cpp" "/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/CMakeFiles/SSOO_P3.dir/src/Clients_Common.cpp.o"
   "/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/src/Coincidence_Format.cpp" "/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/CMakeFiles/SSOO_P3.dir/src/Coincidence_Format.cpp.o"
   "/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/src/Text.cpp" "/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/CMakeFiles/SSOO_P3.dir/src/Text.cpp.o"
   "/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/src/semaphoreI.cpp" "/mnt/c/Users/TOMIC/CLionProjects/SSOOIGLEII_P3/cmake-build-debug/CMakeFiles/SSOO_P3.dir/src/semaphoreI.cpp.o"

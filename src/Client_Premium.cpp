@@ -85,21 +85,6 @@ void parse_argv(int argc, char **argv, char **word, char **v_texts_name)
     }
 }
 
-/********************************* SEMAPHORES AND SHARED MEMORY MANAGEMENT ********************************************/
-
-void get_shm_segments(int *shm_client, struct TRequest_t **p_request)
-{
-    *shm_client = shm_open(SHM_CLIENT, O_RDWR, 0644);
-    *p_request = static_cast<TRequest_t *>(mmap(nullptr, sizeof(struct TRequest_t),
-                                                PROT_READ | PROT_WRITE, MAP_SHARED, *shm_client, 0));
-}
-
-void get_sems(sem_t **p_sem_request_ready, sem_t **p_sem_stored_request)
-{
-    *p_sem_request_ready = get_semaphore(SEM_REQUEST_READY);
-    *p_sem_stored_request = get_semaphore(SEM_STORED_REQUEST);
-}
-
 /******************* PROCESS COMUNICATION ******************/
 
 void signal_handler(int signal){

@@ -258,6 +258,33 @@ src/Client_Premium_Limit.cpp.s:
 	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Client_Premium_Limit.cpp.s
 .PHONY : src/Client_Premium_Limit.cpp.s
 
+src/Clients_Common.o: src/Clients_Common.cpp.o
+
+.PHONY : src/Clients_Common.o
+
+# target to build an object file
+src/Clients_Common.cpp.o:
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Clients_Common.cpp.o
+.PHONY : src/Clients_Common.cpp.o
+
+src/Clients_Common.i: src/Clients_Common.cpp.i
+
+.PHONY : src/Clients_Common.i
+
+# target to preprocess a source file
+src/Clients_Common.cpp.i:
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Clients_Common.cpp.i
+.PHONY : src/Clients_Common.cpp.i
+
+src/Clients_Common.s: src/Clients_Common.cpp.s
+
+.PHONY : src/Clients_Common.s
+
+# target to generate assembly for a file
+src/Clients_Common.cpp.s:
+	$(MAKE) -f CMakeFiles/SSOO_P3.dir/build.make CMakeFiles/SSOO_P3.dir/src/Clients_Common.cpp.s
+.PHONY : src/Clients_Common.cpp.s
+
 src/Coincidence_Format.o: src/Coincidence_Format.cpp.o
 
 .PHONY : src/Coincidence_Format.o
@@ -363,6 +390,9 @@ help:
 	@echo "... src/Client_Premium_Limit.o"
 	@echo "... src/Client_Premium_Limit.i"
 	@echo "... src/Client_Premium_Limit.s"
+	@echo "... src/Clients_Common.o"
+	@echo "... src/Clients_Common.i"
+	@echo "... src/Clients_Common.s"
 	@echo "... src/Coincidence_Format.o"
 	@echo "... src/Coincidence_Format.i"
 	@echo "... src/Coincidence_Format.s"

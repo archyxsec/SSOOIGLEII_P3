@@ -14,13 +14,13 @@ ssooigle: ${SOURCE}Buscador.cpp ${SOURCE}semaphoreI.cpp
 Client_Management: ${SOURCE}Client_Management.cpp ${SOURCE}mycmp.cpp ${SOURCE}Text.cpp ${SOURCE}Coincidence_Format.cpp ${SOURCE}semaphoreI.cpp
 	${CC} $^ -o ${EXEC}$@ ${CFLAGS}
 
-Client_Premium: ${SOURCE}Client_Premium.cpp ${SOURCE}mycmp.cpp ${SOURCE}Text.cpp ${SOURCE}Coincidence_Format.cpp ${SOURCE}semaphoreI.cpp
+Client_Premium: ${SOURCE}Client_Premium.cpp ${SOURCE}mycmp.cpp ${SOURCE}Text.cpp ${SOURCE}Coincidence_Format.cpp ${SOURCE}semaphoreI.cpp ${SOURCE}Clients_Common.cpp
 	${CC} $^ -o ${EXEC}$@ ${CFLAGS}
 
-Client_Premium_Limit: ${SOURCE}Client_Premium_Limit.cpp ${SOURCE}mycmp.cpp ${SOURCE}Text.cpp ${SOURCE}Coincidence_Format.cpp ${SOURCE}semaphoreI.cpp
+Client_Premium_Limit: ${SOURCE}Client_Premium_Limit.cpp ${SOURCE}mycmp.cpp ${SOURCE}Text.cpp ${SOURCE}Coincidence_Format.cpp ${SOURCE}semaphoreI.cpp ${SOURCE}Clients_Common.cpp
 	${CC} $^ -o ${EXEC}$@ ${CFLAGS}
 
-Client_Normal: ${SOURCE}Client_Normal.cpp ${SOURCE}mycmp.cpp ${SOURCE}Text.cpp ${SOURCE}Coincidence_Format.cpp ${SOURCE}semaphoreI.cpp
+Client_Normal: ${SOURCE}Client_Normal.cpp ${SOURCE}mycmp.cpp ${SOURCE}Text.cpp ${SOURCE}Coincidence_Format.cpp ${SOURCE}semaphoreI.cpp ${SOURCE}Clients_Common.cpp
 	${CC} $^ -o ${EXEC}$@ ${CFLAGS}
 
 PaymentSystem: ${SOURCE}PaymentSystem.cpp ${SOURCE}semaphoreI.cpp

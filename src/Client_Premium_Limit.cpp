@@ -15,6 +15,7 @@
 * Date          Author          Ref      Revision
 * 05/05/2021    Sergio          1        Creado main y funciones de manejo de semáforos y memoria compartida
 * 10/05/2021    Sergio          2        Implementadas resto de funciones
+* 13/05/2021    Sergio          3        Eliminadas funciones comunes a todos los clientes,estan en Clients_Common
 *
 *
 |********************************************************/
@@ -84,26 +85,11 @@ void parse_argv(int argc, char **argv, char **word, char **v_texts_name, int *n_
     }
 }
 
-/********************************* SEMAPHORES AND SHARED MEMORY MANAGEMENT ********************************************/
-
-void get_sems(sem_t **p_sem_request_ready, sem_t **p_sem_stored_request)
-{
-    *p_sem_request_ready = get_semaphore(SEM_REQUEST_READY);
-    *p_sem_stored_request = get_semaphore(SEM_STORED_REQUEST);
-}
-
-void get_shm_segments(int *shm_client, struct TRequest_t **p_request)
-{
-    *shm_client = shm_open(SHM_CLIENT, O_RDWR, 0644);
-    *p_request = static_cast<TRequest_t *>(mmap(nullptr, sizeof(struct TRequest_t),
-                                                PROT_READ | PROT_WRITE, MAP_SHARED, *shm_client, 0));
-}
-
 /******************* PROCESS COMUNICATION ******************/
 
 void install_signal_handler() {
     if ((signal(SIGINT, signal_handler)) == SIG_ERR) {
-        fprintf(stderr, "[CLIENT_PREMIUM_LIMIT] Error installing signal handler: %s.\n", strerror(errno));
+        fprintf(stderr, "%s[CLIENT_PREMIUM_LIMIT] Error installing signal handler: %s%s.\n",RED, strerror(errno),RESET);
         std::exit(EXIT_FAILURE);
     }
 }
