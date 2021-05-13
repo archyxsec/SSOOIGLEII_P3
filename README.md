@@ -7,7 +7,7 @@
 
 ## **Esquema**
 
-![imagen](https://user-images.githubusercontent.com/52278758/118182133-ecdce580-b438-11eb-807a-be906a0c69f8.png)
+![imagen](https://user-images.githubusercontent.com/52278758/118183220-24985d00-b43a-11eb-8ee6-08389ba1f486.png)
 
 ## **Idea**
 
