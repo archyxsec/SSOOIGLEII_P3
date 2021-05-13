@@ -1,6 +1,21 @@
-//
-// Created by TOMIC on 26/04/2021.
-//
+/******************************************************
+* Project : Práctica 3 de Sistemas Operativos II
+*
+* Program name : colors.h
+*
+* Author : Tomás Jesús García López y Sergio Sánchez Iglesias
+*
+* Date created : 26/04/2021
+*
+* Purpose : colores para impresión de mensajes
+*
+*
+* Revision History:
+*
+* Date          Author          Ref      Revision
+*
+*
+|********************************************************/
 
 #ifndef SSOO_P3_COLORS_H
 #define SSOO_P3_COLORS_H

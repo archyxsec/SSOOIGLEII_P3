@@ -13,8 +13,13 @@
 * Revision History:
 *
 * Date          Author          Ref      Revision
-* 25/04/2021    Tomás           1        incompatibilidad entre std::string y memoria compartida en C.
-*
+* 25/04/2021    Tomás           1        Añadido TProcess_T y TPayment_T
+* 25/04/2021    Tomás           2        incompatibilidad entre std::string y memoria compartida en C.
+* 25/04/2021    Tomás           3        Definidos semáforos, clientes y cambiado TProcess_t
+* 28/04/2021    Sergio          4        Definida estructura TRequest_t
+* 29/04/2021    Tomás           5        Cambiado char* por std::string en estructuras
+* 07/05/2021    Tomás           6        Añadidas constantes y cambio de std::String por char[] debido a que memoria compartida
+*                                        de C no es compatible con std::string
 *
 |********************************************************/
 
@@ -88,10 +93,6 @@ struct TPayment{
     int id;
     int client_initial_balance;
     int balance;
-};
-
-struct TResult{
-    char data[MAX_BUFFER_TEXT];
 };
 
 #endif //SSOO_P3_DEFINITIONS_H

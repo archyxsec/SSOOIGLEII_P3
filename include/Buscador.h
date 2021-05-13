@@ -13,8 +13,15 @@
 * Revision History:
 *
 * Date          Author          Ref      Revision
-* 25/04/2021    Tomás           1        incompatibilidad entre std::string y memoria compartida en C.
-*
+* 25/04/2021    Tomás           1        Declaración de funciones
+* 25/04/2021    Tomás           2        incompatibilidad entre std::string y memoria compartida en C.
+* 05/05/2021    Tomás           3        Variables de condición y vector de peticiones. También función wait_requests
+*                                        correspondiente a un hilo
+* 07/05/2021    Tomás           4        Declaraciones de wait_requests(), manage_queue() y create_client_management()
+* 07/05/2021    Tomás           5        añadido [[noreturn]] y install_signal_handler y signal_handler
+* 10/05/2021    Tomás           6        cambiados parametros de create_client_management
+* 12/05/2021    Tomás           7        Variables atómicas correspondientes a el número de replicas y clientes atendidos. Organización del código
+* 13/05/2021    Tomás           8        Variables total_clients_attends y total_clients_requests añadidas a la solición
 *
 |********************************************************/
 
@@ -30,10 +37,8 @@
 
 int g_nProcesses = N_CLIENTS + N_PAYMENT_SYSTEM;
 std::mutex queue_semaphore_management; // Mutex semaphore for guaranted exclusive access to critical seccion
-std::mutex termination_client_management; // Mutex semaphore for guaranted exclusive access to critical seccion
 std::mutex mutex; // Queue access
 std::condition_variable extract_request_condition;
-std::condition_variable n_clients_attend;
 std::vector<struct TProcess_t> v_clients; //vector of clients processes
 std::vector<struct TRequest_t> request_vector(0);
 std::atomic<int> n_replics(0); //atomic n_replics for client_management processes control.
@@ -43,7 +48,7 @@ pid_t payment_process;
 int total_clients_attends = 0;
 int total_clients_requests = 0;
 
-/******************************** CLIENT REQUESTS MANAGEMEN *****************************************************/
+/******************************** CLIENT REQUESTS MANAGEMENT *****************************************************/
 [[noreturn]] void manage_clients_management_termination(sem_t *sem_replic_finish);
 [[noreturn]] void wait_requests(sem_t *sem_request_ready, sem_t *sem_stored_request,struct TRequest_t *request);
 [[noreturn]] void manage_queue();

@@ -5,7 +5,7 @@
 *
 * Author : Tomás Jesús García López y Sergio Sánchez Iglesias
 *
-* Date created : 21/04/2021
+* Date created : 26/04/2021
 *
 * Purpose : Manejador de clientes, su respectiva busquedas
 *
@@ -13,7 +13,15 @@
 * Revision History:
 *
 * Date          Author          Ref      Revision
-*
+* 29/04/2021    Tomás           1        Empezando a programar funciones
+* 01/05/2021    Tomás           2        Función wait_for_request cambiado
+* 03/05/2021    Tomás           3        Tocada Función wait_for_request y empezado start_finding()
+* 03/05/2021    Tomás           4        función find_ilimited_premium_client y MERGE en start_finding de otra rama
+* 05/05/2021    Tomás           5        Cambiada clase por funciones, modificado start_finding() y creado main()
+* 07/05/2021    Sergio          6        Intentando avisar al cliente de que estan los resultados
+* 07/05/2021    Tomás           7        Función start_finding() modificada y parse_argv
+* 10/05/2021    Tomás           8        Cambiado getcoincidences y start_finding. Creado hilos para busquedas.
+*                                        Implementado find_normal_client, find_premium_client, get_shm_segments y get_sems
 *
 |********************************************************/
 

@@ -1,17 +1,34 @@
-//
-// Created by TOMIC on 26/04/2021.
-//
+/******************************************************
+* Project : Práctica 3 de Sistemas Operativos II
+*
+* Program name : Text.cpp
+*
+* Author : Tomás Jesús García López y Sergio Sánchez Iglesias
+*
+* Date created : 26/04/2021
+*
+* Purpose : clase Text para el manejo de un texto y wrapper de palabras para coincidencias
+*
+*
+* Revision History:
+*
+* Date          Author          Ref      Revision
+* 13/05/2021    Tomás           1        Cambiado algunás funciones, puestas estáticas
+*
+|********************************************************/
 
 #include "../include/Text.h"
 
+#include <utility>
+
 
 Text::Text(std::string filename){
-    this->file_name = filename;
+    this->file_name = std::move(filename);
     this->n_lines = get_number_of_lines();
 }
 
-unsigned Text::get_number_of_lines(){
-    unsigned number_of_lines;
+unsigned Text::get_number_of_lines() const{
+    unsigned number_of_lines = 0;
     std::string line;
     std::ifstream myfile(this->file_name);
     while (std::getline(myfile, line, '\n'))
@@ -20,7 +37,7 @@ unsigned Text::get_number_of_lines(){
     return number_of_lines;
 }
 
-std::string Text::getlinetext(int n_line)
+std::string Text::getlinetext(int n_line) const
 {
     std::string line;
     std::ifstream myfile(this->file_name);
@@ -41,15 +58,15 @@ std::vector<std::string> Text::getlinevector(int n_line)
     std::string sep = " ";
     std::vector<std::string> arr;
     current=strtok(cstr,sep.c_str());
-    while(current!=NULL){
+    while(current!=nullptr){
         arr.push_back(current);
-        current=strtok(NULL,sep.c_str());
+        current=strtok(nullptr,sep.c_str());
     }
     return arr;
 }
 std::string Text::wordwrapper(std::string word)
 {
-    std::string formatedword = "";
+    std::string formatedword;
     char character;
     for(unsigned i=0; i<word.size(); i++)
     {

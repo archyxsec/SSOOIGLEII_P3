@@ -5,7 +5,7 @@
 *
 * Author : Tomás Jesús García López y Sergio Sánchez Iglesias
 *
-* Date created : 21/04/2021
+* Date created : 26/04/2021
 *
 * Purpose : declaración de funciones del manejador de clientes
 *
@@ -13,7 +13,14 @@
 * Revision History:
 *
 * Date          Author          Ref      Revision
-*
+* 28/04/2021    Sergio          1        Retocando clase Client_Management
+* 29/04/2021    Tomás           2        Cambio clases por funciones
+* 01/05/2021    Tomás           3        Free_resources
+* 03/05/2021    Tomás           4        Añadido Mutex
+* 03/05/2021    Tomás           5        Definida función find_ilimited_premium_client
+* 05/05/2021    Tomás           6        Cambiada clase por funciones
+* 07/05/2021    Tomás           7        Añadido *client_pid a parse_argv y start_finding() y cambiado todos std::string por char
+* 10/05/2021    Tomás           8        Cambiado Declaraciones de funciones para coordinar el cpp
 *
 |********************************************************/
 
@@ -62,4 +69,5 @@ void get_sems(sem_t **p_sem_balance_ready, sem_t **p_sem_balance_charge, sem_t *
 
 /******** FREE RESOURCES *********/
 void free_resources();
+
 #endif //SSOO_P3_CLIENT_MANAGEMENT_H

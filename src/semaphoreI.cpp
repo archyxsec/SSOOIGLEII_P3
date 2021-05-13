@@ -1,7 +1,26 @@
+/******************************************************
+* Project : Práctica 3 de Sistemas Operativos II
+*
+* Program name : semaphoreI.cpp
+*
+* Author : Tomás Jesús García López y Sergio Sánchez Iglesias
+*
+* Date created : 21/04/2021
+*
+* Purpose : abstracción de funciones para manejo de semáforos
+*
+*
+* Revision History:
+*
+* Date          Author          Ref      Revision
+* 25/04/2021    Tomás           1        Añadido include
+* 13/05/2021    Tomás           2        Cambiado parametros de funciones por const std::string&
+*
+|********************************************************/
 
 #include "../include/semaphoreI.h"
 
-sem_t *create_semaphore (std::string name, unsigned int value) {
+sem_t *create_semaphore (const std::string& name, unsigned int value) {
     sem_t *sem;
 
     if ((sem = sem_open(name.c_str(), O_CREAT, 0644, value)) == SEM_FAILED) {
@@ -12,7 +31,7 @@ sem_t *create_semaphore (std::string name, unsigned int value) {
     return sem;
 }
 
-sem_t *get_semaphore (std::string name) {
+sem_t *get_semaphore (const std::string& name) {
     sem_t *sem;
 
     if ((sem = sem_open(name.c_str(), O_RDWR)) == SEM_FAILED) {
@@ -23,7 +42,7 @@ sem_t *get_semaphore (std::string name) {
     return sem;
 }
 
-void remove_semaphore (std::string name) {
+void remove_semaphore (const std::string& name) {
     sem_t *sem = get_semaphore(name);
 
     if ((sem_close(sem)) == -1) {

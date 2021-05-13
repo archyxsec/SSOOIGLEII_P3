@@ -13,11 +13,26 @@
 * Revision History:
 *
 * Date          Author          Ref      Revision
-* 25/04/2021    Tomás           1        incompatibilidad entre std::string y memoria compartida en C.
-*
-*
-*
-* 13/05/2021    Tomás           x        Correcta sincronización de Hilos
+* 25/04/2021    Tomás           1        Declaración de funciones y creación de ellas, cambiando include también
+* 25/04/2021    Tomás           2        Incompatibilidad entre std::string y memoria compartida en C.
+* 25/04/2021    Tomás           3        Creado Main, y cambiado funciones de manejo de procesos y de semáforos
+*                                        y segmentos de memoria
+* 05/05/2021    Tomás           4        Implementado main, empezando a probar la concurrencia de hilos del buscador
+* 05/05/2021    Tomás           5        Función manage_queue() que extrae peticiones y crea Client_Management, el
+*                                        código es similar al wait_request() antiguo de Client_Management
+* 05/05/2021    Tomás           6        Funciones create_client_managements y wait_requests() -> función que ejecutará
+*                                        otro hilo que atiende peticiones y las encola
+* 05/05/2021    Tomás           7        modificado get_sems y create_shm_segments incorporando el segmento de memoria compartida
+*                                        y los semáforos con los que se comunicarán los procesos clientes con el hilo manejador de la cola
+* 07/05/2021    Tomás           8        Cambiando Main para crear unos cuantos procesos, manage_queue, create_client_management
+*                                        Modificando todas las funciones que usaban std::string por char[] para adaptar las peticiones
+*                                        wait_requests, create_shm_segments
+* 07/05/2021    Tomás           9        Cambiado por completo create_client_management para adaptarse a execv
+* 07/05/2021    Tomás           10       Función gettextlen creada y install_signal_handler y signal_handler
+* 10/05/2021    Tomás           11       Captación de errores en creación de clientes, creada pipename para obtenerla del segmento de memoria compartida
+*                                        Cambiando funciones como el manejo de la cola de peticiones y la espera de peticiones
+* 10/05/2021    Tomás           12       Solucionados errores en manage_queue, al elegir un cliente de la cola 80% vips, 20% normales
+* 13/05/2021    Tomás           13        Correcta sincronización de Hilos
 *
 *
 |********************************************************/
@@ -50,7 +65,7 @@ int main(int argc, char **argv) {
     return EXIT_SUCCESS;
 }
 
-/******************************** CLIENT REQUESTS MANAGEMEN *****************************************************/
+/******************************** CLIENT REQUESTS MANAGEMENT *****************************************************/
 
 [[noreturn]] void manage_clients_management_termination(sem_t *sem_replic_finish){
     for(;;){
@@ -123,6 +138,7 @@ int main(int argc, char **argv) {
                 choose = true;
             else if (strncmp(request_vector[i].category,NORMAL_CATEGORY,sizeof (request_vector[i].category)) == 0) choose = true;
             if (choose) {
+                /*Build the Client Management args from vector*/
                 strcpy(category,request_vector[i].category );
                 strcpy(word,request_vector[i].word );
                 strcpy(pipename,request_vector[i].pipename);
@@ -131,7 +147,7 @@ int main(int argc, char **argv) {
                 client_pid = request_vector[i].client_pid;
                 request_vector.erase(request_vector.begin() + i); //Remove request for queue
                 create_client_management(v_texts, word,pipename, initial_balance, category, client_pid);
-                n_replics++;
+                n_replics++; // Increment the atomic number of replics
                 std::cout << "[HILO MANAGE QUEUE] n_replics: " << n_replics << std::endl;
                 break;
             }
@@ -214,7 +230,7 @@ void create_payment_system(enum ProcessClass_t clas)
 
     get_str_process_info(clas, path, str_process_class);
     argv[0] = (char *)PAYMENT_SYSTEM_CLASS;
-    argv[1] = NULL;
+    argv[1] = nullptr;
 
     pid = create_single_process(*path,*str_process_class,argv);
 
@@ -229,7 +245,7 @@ void create_aleatory_clients(int n_clients)
     struct dirent *ent;
     char FileNameBuffer[MAX_BUFFER_TEXT];
     char AuxiliarBuffer[MAX_BUFFER_TEXT];
-    char possible_words[8][MAX_BUFFER_TEXT] = {"hola","lol","vive","sueño","lól","LOL","prueba","sirena"};
+    char possible_words[8][MAX_BUFFER_TEXT] = {"hola","lol","vive","sueño","lól","LOL","prueba","sirena"}; // Word dictionary
     char File_texts[MAX_BUFFER_TEXT][MAX_BUFFER_TEXT];
     char *word;
     int random_path_number, random_number_texts, random_word_number, random_text_index, random_credits_number;
@@ -237,8 +253,9 @@ void create_aleatory_clients(int n_clients)
     pid_t pid;
     int file_text_elements = 0;
 
-    if ((dir = opendir (DATA_PATH)) != NULL) {
-        while ((ent = readdir (dir)) != NULL) {
+    /*Get the Texts paths from data/ directory*/
+    if ((dir = opendir (DATA_PATH)) != nullptr) {
+        while ((ent = readdir (dir)) != nullptr) {
             if(strcmp(ent->d_name,".") == 0 || strcmp(ent->d_name,"..") == 0) continue;
             sprintf(FileNameBuffer,"%s%s",DATA_PATH,ent->d_name); // Build the full file path
             /*Consider that all files are file mode not directories because We create de data/ directory*/
@@ -248,7 +265,7 @@ void create_aleatory_clients(int n_clients)
         closedir (dir);
     } else {
         /* could not open directory */
-        perror ("");
+        fprintf(stderr,"%s[BUSCADOR] Error, could not open the data/ directory%s.\n",RED,RESET);
         std::exit(EXIT_FAILURE);
     }
 
@@ -261,7 +278,7 @@ void create_aleatory_clients(int n_clients)
         std::vector<int> previous_indexes;
         random_path_number = rand() % 3; // for {ILIMITED_PREMIUM_CLIENT,PREMIUM_CLIENT,NORMAL_CLIENT};
         random_word_number = rand() % (8);
-        random_number_texts = 1 + rand() % (file_text_elements-3); // Max 7 texts
+        random_number_texts = 1 + rand() % (file_text_elements-3); // Max 7 texts, We can delete the (-3) for choose all number of texts
 
         if(random_path_number == 0) {
             n_argvs = 3 + random_number_texts; // class name, word, NULL and random_number_texts
@@ -305,7 +322,7 @@ void create_aleatory_clients(int n_clients)
             }
         }
 
-        argv[argv_index] = NULL;
+        argv[argv_index] = nullptr;
 
         get_str_process_info(clas, path, str_process_class);
         pid = create_single_process(*path, *str_process_class, static_cast<char **>(argv));
@@ -379,12 +396,12 @@ void create_shm_segments(int *shm_payment, struct T_Payment **p_payment, int *sh
     /* Create and initialize shared memory segments */
     *shm_payment = shm_open(SHM_PAYMENT, O_CREAT | O_RDWR, 0644);
     ftruncate(*shm_payment, sizeof(struct TPayment));
-    *p_payment = static_cast<T_Payment *>(mmap(NULL, sizeof(struct TPayment),
+    *p_payment = static_cast<T_Payment *>(mmap(nullptr, sizeof(struct TPayment),
             PROT_READ | PROT_WRITE, MAP_SHARED, *shm_payment, 0));
 
     *shm_client = shm_open(SHM_CLIENT, O_CREAT | O_RDWR, 0644);
     ftruncate(*shm_client, sizeof(struct TRequest_t));
-    *p_request = static_cast<TRequest_t *>(mmap(NULL, sizeof(struct TRequest_t),
+    *p_request = static_cast<TRequest_t *>(mmap(nullptr, sizeof(struct TRequest_t),
                                                 PROT_READ | PROT_WRITE, MAP_SHARED, *shm_client, 0));
 }
 void create_sems(sem_t **sem_balance_ready, sem_t **sem_balance_charge, sem_t **sem_request_ready,
@@ -425,7 +442,6 @@ void terminate_processes()
             fprintf(stderr, "[BUSCADOR] Error using kill() on process %d: %s.\n",
                     v_clients[i].pid, strerror(errno));
         }
-
     }
 }
 void free_resources()
