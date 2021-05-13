@@ -15,7 +15,7 @@
 * Date          Author          Ref      Revision
 * 25/04/2021    Tomás           1        Incluidas librerias de C
 * 25/04/2021    Tomás           2        cambiado const char por std::string
-* 13/05/2021    Tomás           2        Cambiado parametros de funciones por const std::string&
+* 13/05/2021    Tomás           3        Cambiado parametros de funciones por const std::string&
 *
 |********************************************************/
 

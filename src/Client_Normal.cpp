@@ -15,6 +15,7 @@
 * Date          Author          Ref      Revision
 * 05/05/2021    Sergio          1        Creado main y funciones de manejo de semáforos y memoria compartida
 * 10/05/2021    Sergio          2        Implementadas resto de funciones
+* 13/05/2021    Sergio          3        Eliminadas funciones comunes a todos los clientes,estan en Clients_Common
 *
 |********************************************************/
 

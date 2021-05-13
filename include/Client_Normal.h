@@ -15,6 +15,7 @@
 * Date          Author          Ref      Revision
 * 05/05/2021    Sergio          1        Librerias, funciones y métodos de clases
 * 07/05/2021    Sergio          2        Borrado clase, declaración de funciones.
+* 13/05/2021    Sergio          3        Eliminadas funciones comunes a todos los clientes,estan en Clients_Common
 *
 |********************************************************/
 

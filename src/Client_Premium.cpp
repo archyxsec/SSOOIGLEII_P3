@@ -18,6 +18,7 @@
 * 07/05/2021    Sergio          3        Cambiando funciones para adaptar los args
 * 10/05/2021    Sergio          4        free_resources y parse_argv adaptados
 * 10/05/2021    Sergio          5        Implementadas resto de funciones
+* 13/05/2021    Sergio          6        Eliminadas funciones comunes a todos los clientes,estan en Clients_Common
 *
 *
 |********************************************************/
