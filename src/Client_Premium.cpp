@@ -66,7 +66,7 @@ int main(int argc, char **argv){
     close(mypipe);
     std::cout << BOLDMAGENTA << "[CLIENT_PREMIUM " << getpid() << "]" << RESET
               <<  "Time waiting for my results: " << BLUE << time.count() << RESET << "s" << std::endl;
-    //pause(); // wait for Buscador signal to termination
+    //pause(); // wait for Buscador signal to termination. If we like we can wait for Buscador signal
     free_resources();
     return EXIT_SUCCESS;
 }
