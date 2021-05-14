@@ -301,7 +301,7 @@ void create_aleatory_clients(int n_clients)
         argv[argv_index++] = word;
 
         if(clas == PREMIUM_CLIENT || clas == NORMAL_CLIENT) {
-            random_credits_number = 1 + rand() % 50;
+            random_credits_number = 1 + rand() % MAX_CREDITS; // Default 50 credits max
             sprintf(AuxiliarBuffer,"%d",random_credits_number);
             argv[argv_index++] = AuxiliarBuffer;
         }

@@ -25,6 +25,10 @@ En general, hemos combinado todos los conocimientos, y más... adquiridos durant
 
 Es posible que algunos resultados se muestren con algo de ruido por la impresión con colores y la concurrencia de procesos y hilos.
 
+NOTA: Cada cliente puede tener máximo número de textos en el directorio data/ -3 (para que no sean demasiados), no obstante este -3 de puede eliminar.
+Es importante, que si se quiera añadir texto, el nombre se construya mediante NOMBRE_FICHERO, separados por '_' y no '-', ya que en memoria compartida
+se envían los textos separados con '-'. El número máximo de creditos por defecto, se establece en 50.
+
 El día de la entrega cambiaré el acceso al repositorio para que sea público y este al acceso de todos!.
 
 ## **Requeriments:** 
