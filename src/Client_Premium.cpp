@@ -66,7 +66,7 @@ int main(int argc, char **argv){
     close(mypipe);
     std::cout << BOLDMAGENTA << "[CLIENT_PREMIUM " << getpid() << "]" << RESET
               <<  "Time waiting for my results: " << BLUE << time.count() << RESET << "s" << std::endl;
-    pause(); // wait for Buscador signal to termination
+    //pause(); // wait for Buscador signal to termination
     free_resources();
     return EXIT_SUCCESS;
 }
@@ -108,6 +108,5 @@ void install_signal_handler() {
 /********** FREE RESOURCES *******/
 
 void free_resources(){
-    shm_unlink(SHM_CLIENT);
     unlink(pipename);
 }
