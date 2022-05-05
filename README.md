@@ -36,7 +36,7 @@ El día de la entrega cambiaré el acceso al repositorio para que sea público y
 
 ## **Prepare**
 ```bash
-git clone https://github.com/BlaZzes10/SSOOIGLEII_P3.git
+git clone https://github.com/0xArchy/SSOOIGLEII_P3.git
 cd SSOOIGLEII_P3 && make
 ```
 
